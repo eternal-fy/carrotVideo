@@ -4,7 +4,10 @@ go 1.17
 
 require github.com/beego/beego/v2 v2.0.1
 
-require github.com/smartystreets/goconvey v1.6.4
+require (
+	github.com/jinzhu/gorm v1.9.16
+	github.com/smartystreets/goconvey v1.6.4
+)
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -12,6 +15,7 @@ require (
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jtolds/gls v4.20.0+incompatible // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
