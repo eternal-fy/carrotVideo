@@ -1,8 +1,9 @@
 <template>
   <div id="mainContext">
-    <!--    <ul>
-          <li v-for="(num,index) in 10" :key="index">{{num}}</li>
-        </ul>-->
+    <router-view/>
+<!--    <ul>
+      <li v-for="(num,index) in 10" :key="index">{{ num }}</li>
+    </ul>-->
     <div>
       <form @submit.prevent="add">
         <input v-model="text">
@@ -14,9 +15,10 @@
         <Cline v-for="(item, index) in items" :key="index" :title="item" @remove="items.splice(index,1)"></Cline>
       </ul>
     </div>
+    <button @keyup.enter.exact="alert('hehe')">keyboardClick</button>
+    <button @mousedown.right="alert('hehe')">MouseClick</button>
   </div>
-  <button @keyup.enter.exact="alert('hehe')">keyboardClick</button>
-  <button @mousedown.right="alert('hehe')">MouseClick</button>
+
 
 </template>
 
@@ -47,7 +49,7 @@ export default {
 
 <style scoped>
 #mainContext {
-  padding-left: 150px;
+  padding-left: 200px;
   padding-top: 100px;
 }
 </style>

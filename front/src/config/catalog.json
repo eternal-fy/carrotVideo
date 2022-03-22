@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "indexName": "video",
+      "name": "影视",
+      "link": "/video"
+    },
+    {
+      "indexName": "game",
+      "name": "游戏",
+      "link": "/game"
+    },
+    {
+      "indexName": "comedy",
+      "name": "搞笑",
+      "link": "/comedy"
+    },
+    {
+      "indexName": "adventure",
+      "name": "冒险",
+      "link": "/adventure"
+    },
+    {
+      "indexName": "thriller",
+      "name": "惊悚",
+      "link": "/thriller"
+    },
+    {
+      "indexName": "war",
+      "name": "战争",
+      "link": "/war"
+    },
+    {
+      "indexName": "romance",
+      "name": "爱情",
+      "link": "/romance"
+    },
+    {
+      "indexName": "action",
+      "name": "动作",
+      "link": "/action"
+    },
+    {
+      "indexName": "vlog",
+      "name": "Vlog",
+      "link": "/vlog"
+    }
+  ]
+}

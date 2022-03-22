@@ -1,17 +1,17 @@
 <template>
   <Column></Column>
-  <router-link to="/routeline"  title="首页">跳转</router-link>
 
   <RouteLine></RouteLine>
 <!--  <Table :arr="array">
   </Table>-->
   <MainContext></MainContext>
 
+
 </template>
 
 <script>
 // import Table from "@/components/Table";
-import Column from "@/components/Column";
+import Column from "@/components/Bar";
 import RouteLine from "@/components/RouteLine";
 import MainContext from "@/components/MainContext";
 export default {

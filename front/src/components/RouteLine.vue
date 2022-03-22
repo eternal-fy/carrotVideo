@@ -1,19 +1,18 @@
 <template>
   <div id="routeLine">
-    <Square v-for="(item,index) in 50" :key="index" :context="item" @click="click">
+    <Square v-for="(item,index) in routeLines.data" :key="index" :context="item" @click="click">
     </Square>
   </div>
 </template>
 
 <script>
-import routeLineConfig from "@/config/routeLineConfig.json"
-import Square from "@/components/Square";
+import routeLineConfig from "@/config/catalog.json"
+import Square from "@/components/Square"
+
 export default {
   name: "RouteLine",
   data(){
-    return {
-      routeLines:{}
-    }
+
   },
   methods:{
     click:function (c){
@@ -33,13 +32,15 @@ export default {
 <style scoped>
 #routeLine{
   width: 150px;
-  padding-top:20px;
+  padding:20px 20px;
   position: fixed;
   z-index: 10;
-  overflow-y: scroll;
   top:90px;
   bottom: 0px;
-  border-right: 1px solid black;
+  border-right: 1px solid rgba(0, 0, 0, 0.11);
 
+}
+#routeLine:hover{
+  overflow-y: scroll;
 }
 </style>
