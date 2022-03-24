@@ -1,5 +1,5 @@
 {
-  "name": "my-program",
+  "name": "front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,18 +10,23 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "element-plus": "^2.1.4",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.4",
     "vue-router": "^4.0.10"
   },
   "devDependencies": {
+    "@vue/cli": "^3.0.4",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "unplugin-auto-import": "^0.6.6",
+    "unplugin-vue-components": "^0.18.4"
   },
   "eslintConfig": {
     "root": true,

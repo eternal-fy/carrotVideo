@@ -4,7 +4,7 @@
       <div class="loginArea">
         <a href="https://www.baidu.com" target="_blank">
           <div>
-            个人中心
+<!--            <el-link href="https://element.eleme.io" target="_blank">个人中心</el-link>-->
             <img width="50" height="50" src="../assets/personalCenter.svg"/>
           </div>
         </a>
@@ -21,13 +21,13 @@ export default {
 
 <style scoped>
 #bar {
-  background-color: #6b6464;
+  background-color: #E4E7ED;
   opacity: 0.5;
   position: fixed;
   width: 100%;
   height: 50px;
   padding: 20px 50px;
-  z-index: 20;
+  z-index: 10;
   line-height: 50px;
   overflow: hidden;
   border-bottom: 1px solid rgba(0, 0, 0, 0.11);
