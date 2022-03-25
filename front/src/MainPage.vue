@@ -1,12 +1,10 @@
 <template>
   <Column></Column>
-  <LoginPage v-if="true"></LoginPage>
   <RouteLine></RouteLine>
   <MainContext></MainContext>
 </template>
 
 <script>
-import LoginPage from "@/components/entrance/LoginPage";
 import Column from "@/components/Bar";
 import RouteLine from "@/components/RouteLine";
 import MainContext from "@/components/MainContext";
@@ -18,7 +16,7 @@ export default {
     }
   },
   components: {
-     Column, RouteLine, MainContext,LoginPage
+     Column, RouteLine, MainContext
   }
 }
 </script>

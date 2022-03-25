@@ -1,32 +1,48 @@
 <template>
+  <div>
   <div id="bar">
+    <div class="logoArea"><a  class="logo" href="/"></a></div>
     <div class="context">
+      <div class="columnContxt">
+      </div>
       <div class="loginArea">
-        <a href="https://www.baidu.com" target="_blank">
-          <div>
-<!--            <el-link href="https://element.eleme.io" target="_blank">个人中心</el-link>-->
-            <img width="50" height="50" src="../assets/personalCenter.svg"/>
-          </div>
-        </a>
+            <el-link :underline="false" type="info" href="javascript:void(0)" @click="loginSwitch">个人中心
+              <img width="50" height="50" src="../assets/personalCenter.svg"/>
+            </el-link>
       </div>
     </div>
+  </div>
+  <LoginPage :loginSwitch="loginShow" @showSwitch="loginSwitch"></LoginPage>
   </div>
 </template>
 
 <script>
+import LoginPage from "@/components/entrance/LoginPage";
 export default {
-  name: "Column"
+  name: "Column",
+  data(){
+    return{
+      loginShow:false
+    }
+  },
+  components:{
+    LoginPage
+  },
+  methods:{
+    loginSwitch:function (){
+      this.loginShow = !this.loginShow
+    }
+  }
 }
 </script>
 
 <style scoped>
 #bar {
-  background-color: #E4E7ED;
-  opacity: 0.5;
+  display: flex;
+  flex-direction: row;
   position: fixed;
   width: 100%;
-  height: 50px;
-  padding: 20px 50px;
+  height: 90px;
   z-index: 10;
   line-height: 50px;
   overflow: hidden;
@@ -36,13 +52,30 @@ export default {
 .context {
   display: flex;
   flex-direction: row;
+  padding: 20px 50px;
+}
+.columnContxt{
+  width: 800px;
+
 }
 
 .loginArea {
   width: 500px;
   line-height: 50px;
   font-max-size: 16px;
+}
 
-
+.logoArea{
+  padding-left: 20px;
+  height: 90px;
+  min-width: 200px;
+}
+.logo{
+  height:100%;
+  width: 100%;
+  background-image: url("../assets/carrot.png");
+  background-size:  100% 100%;
+  background-repeat: no-repeat;
+  display: block;
 }
 </style>

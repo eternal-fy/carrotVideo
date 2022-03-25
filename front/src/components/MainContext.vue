@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 #mainContext {
-  padding-left: 200px;
-  padding-top: 100px;
+  padding-left: 220px;
+  padding-top: 120px;
 }
 </style>

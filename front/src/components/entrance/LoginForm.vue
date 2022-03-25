@@ -49,9 +49,11 @@ export default {
       let username = this.userInfo.username
       let password = this.userInfo.password
       alert(username + "-" + password + "登陆成功")
+      this.$emit("loginComplete")
     },
     qqLogin: function () {
       alert("qq登陆成功")
+      this.$emit("loginComplete")
     }
   }
 }

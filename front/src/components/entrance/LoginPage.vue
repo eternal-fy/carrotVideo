@@ -1,17 +1,29 @@
 <template>
-  <div id="loginPage">
-    <div class="blackWrap">
+  <div id="loginPage" v-if="loginSwitch">
+    <div class="blackWrap" >
+      <el-icon class="closeIcon" @click="$emit('showSwitch')">
+        <close-bold/>
+      </el-icon>
     </div>
-    <LoginForm></LoginForm>
+    <LoginForm @loginComplete="$emit('showSwitch')"></LoginForm>
   </div>
 
 </template>
 
 <script>
 import LoginForm from "@/components/entrance/LoginForm";
+import {CloseBold} from "@element-plus/icons-vue";
+
 export default {
   name: "LoginPage",
-   components: {LoginForm}
+  props: {
+    loginSwitch: Boolean
+  },
+  methods: function loSwitch() {
+  this.$emit("")
+  },
+
+  components: {LoginForm, CloseBold}
 }
 </script>
 
@@ -36,5 +48,13 @@ export default {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+}
+
+.closeIcon {
+  position: absolute;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+
 }
 </style>
