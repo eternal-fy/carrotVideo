@@ -10,60 +10,86 @@ import Thriller from "@/components/catagory/Thriller";
 import Video from "@/components/catagory/Video";
 import Vlog from "@/components/catagory/Vlog";
 import War from "@/components/catagory/War";
+import RegisterPage from "@/components/entrance/RegisterPage";
+import mainContext from "@/components/MainContext";
+import Index from "@/components/catagory/Index";
+import mainPage from "@/MainPage";
 
 const routerHistory = createWebHashHistory()
 const router = createRouter({
     history: routerHistory,
     // scrollBehavior: true,
     routes: [
-
         {
-            path: '/comedy',
-            name: 'comedy',
-            component: Comedy,
-            meta: {
-                requiresNotAuth: true
-            }
+            path: '/',
+            redirect: '/main-page/main-context/index',
         },
         {
-            path: '/action',
-            name: 'action',
-            component: Action
-        },
-        {
-            path: '/adventure',
-            name: 'adventure',
-            component: Adventure
-        },
-        {
-            path: '/game',
-            name: 'game',
-            component: Game
-        },
-        {
-            path: '/romance',
-            name: 'romance',
-            component: Romance
-        },
-        {
-            path: '/thriller',
-            name: 'thriller',
-            component: Thriller
-        },
-        {
-            path: '/video',
-            name: 'video',
-            component: Video
-        },
-        {
-            path: '/vlog',
-            name: 'vlog',
-            component: Vlog
-        },
-        {
-            path: '/war',
-            name: 'war',
-            component: War
+            path: '/main-page',
+            component: mainPage,
+            children: [{
+                path: 'main-context',
+                name: 'mainContext',
+                component: mainContext,
+                children: [
+                    {
+                        path: 'index',
+                        name: 'index',
+                        component: Index,
+                        meta: {
+                            requiresNotAuth: true
+                        }
+                    },
+                    {
+                        path: 'comedy',
+                        name: 'comedy',
+                        component: Comedy,
+                        meta: {
+                            requiresNotAuth: true
+                        }
+                    },
+                    {
+                        path: 'action',
+                        name: 'action',
+                        component: Action
+                    },
+                    {
+                        path: 'adventure',
+                        name: 'adventure',
+                        component: Adventure
+                    },
+                    {
+                        path: 'game',
+                        name: 'game',
+                        component: Game
+                    },
+                    {
+                        path: 'romance',
+                        name: 'romance',
+                        component: Romance
+                    },
+                    {
+                        path: 'thriller',
+                        name: 'thriller',
+                        component: Thriller
+                    },
+                    {
+                        path: 'video',
+                        name: 'video',
+                        component: Video
+                    },
+                    {
+                        path: 'vlog',
+                        name: 'vlog',
+                        component: Vlog
+                    },
+                    {
+                        path: 'war',
+                        name: 'war',
+                        component: War
+                    }
+                ]
+            }]
         },
         {
             path: '/table',
@@ -78,6 +104,15 @@ const router = createRouter({
                 requiresNotAuth: true
             }
         },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterPage,
+            meta: {
+                requiresNotAuth: true
+            }
+        },
+
 
     ]
 })

@@ -1,8 +1,7 @@
 <template>
   <div id="mainContext">
     <router-view/>
-
-    <el-row class="mb-4">
+<!--    <el-row class="mb-4">
       <el-button>Default</el-button>
       <el-button type="primary">Primary</el-button>
       <el-button type="success">Success</el-button>
@@ -10,8 +9,7 @@
       <el-button type="warning">Warning</el-button>
       <el-button type="danger">Danger</el-button>
       <el-button>中文</el-button>
-    </el-row>
-
+    </el-row>-->
 
     <!--    <ul>
           <li v-for="(num,index) in 10" :key="index">{{ num }}</li>

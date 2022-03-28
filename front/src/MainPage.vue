@@ -1,13 +1,13 @@
 <template>
   <Column></Column>
   <RouteLine></RouteLine>
-  <MainContext></MainContext>
+  <router-view></router-view>
 </template>
 
 <script>
 import Column from "@/components/Bar";
 import RouteLine from "@/components/RouteLine";
-import MainContext from "@/components/MainContext";
+// import MainContext from "@/components/MainContext";
 export default {
   name: 'App',
   data() {
@@ -16,7 +16,7 @@ export default {
     }
   },
   components: {
-     Column, RouteLine, MainContext
+     Column, RouteLine//, MainContext
   }
 }
 </script>

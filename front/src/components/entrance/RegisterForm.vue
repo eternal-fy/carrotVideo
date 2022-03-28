@@ -1,8 +1,8 @@
 <template>
-  <div class="loginSquare">
-    <div class="loginForm">
-      <div class="loginContext">
-        <span class="formTitle">登录</span>
+  <div class="registerSquare">
+    <div class="registerForm">
+      <div class="registerContext">
+        <span class="formTitle">注册</span>
         <div class="formContext">
           <el-form
               label-width="100px"
@@ -15,18 +15,14 @@
             <el-form-item label="password">
               <el-input v-model="userInfo.password"/>
             </el-form-item>
+            <el-form-item label="repassword">
+              <el-input v-model="userInfo.repassword"/>
+            </el-form-item>
             <el-form-item>
-              <el-button type="primary"  @click="userLogin"
-              >登陆
+              <el-button type="primary" @click="userRegister"
+              >submit
               </el-button
               >
-            </el-form-item>
-            <el-form-item label="thrid-part">
-              <a href="javascript:void(0)" @click="qqLogin"><img src="@/assets/qq.png" height="32"/></a>
-              <div class="registerArea">
-                  <router-link to="/register"  float="right" target="_blank">立即注册</router-link>
-              </div>
-
             </el-form-item>
           </el-form>
         </div>
@@ -38,32 +34,26 @@
 
 <script>
 export default {
-  name: "LoginForm",
+  name: "RegisterForm",
   data() {
     return {
       userInfo: {
         username: '',
-        password: ''
+        password: '',
+        repassword: '',
       }
     }
   },
-  methods: {
-    userLogin: function () {
-      let username = this.userInfo.username
-      let password = this.userInfo.password
-      alert(username + "-" + password + "登陆成功")
-      this.$emit("loginComplete")
-    },
-    qqLogin: function () {
-      alert("qq登陆成功")
-      this.$emit("loginComplete")
+  methods:{
+    userRegister:function (){
+      alert(this.userInfo)
     }
   }
 }
 </script>
 
 <style scoped>
-.loginSquare {
+.registerSquare {
   transform: translate(-50%, -50%);
   left: 50%;
   top: 50%;
@@ -74,13 +64,13 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
 
-.loginForm {
+.registerForm {
   line-height: 1.5;
   padding: 20px 40px;
   position: relative;
 }
 
-.loginContext {
+.registerContext {
   text-align: center;
 }
 
@@ -94,19 +84,5 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: #ff2626;
-  font-size: 14px;
-}
-
-.registerArea {
- position: absolute;
-  right: 26px;
-}
-.el-button{
-  width: 500px;
 }
 </style>

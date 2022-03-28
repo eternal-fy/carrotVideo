@@ -1,49 +1,54 @@
 {
   "data": [
     {
+      "indexName": "index",
+      "name": "首页",
+      "link": "/main-page/main-context/index"
+    },
+    {
       "indexName": "video",
       "name": "影视",
-      "link": "/video"
+      "link": "/main-page/main-context/video"
     },
     {
       "indexName": "game",
       "name": "游戏",
-      "link": "/game"
+      "link": "/main-page/main-context/game"
     },
     {
       "indexName": "comedy",
       "name": "搞笑",
-      "link": "/comedy"
+      "link": "/main-page/main-context/comedy"
     },
     {
       "indexName": "adventure",
       "name": "冒险",
-      "link": "/adventure"
+      "link": "/main-page/main-context/adventure"
     },
     {
       "indexName": "thriller",
       "name": "惊悚",
-      "link": "/thriller"
+      "link": "/main-page/main-context/thriller"
     },
     {
       "indexName": "war",
       "name": "战争",
-      "link": "/war"
+      "link": "/main-page/main-context/war"
     },
     {
       "indexName": "romance",
       "name": "爱情",
-      "link": "/romance"
+      "link": "/main-page/main-context/romance"
     },
     {
       "indexName": "action",
       "name": "动作",
-      "link": "/action"
+      "link": "/main-page/main-context/action"
     },
     {
       "indexName": "vlog",
       "name": "Vlog",
-      "link": "/vlog"
+      "link": "/main-page/main-context/vlog"
     }
   ]
 }
