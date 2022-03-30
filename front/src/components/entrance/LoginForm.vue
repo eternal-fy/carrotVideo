@@ -16,7 +16,7 @@
               <el-input v-model="userInfo.password"/>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary"  @click="userLogin"
+              <el-button type="primary" @click="userLogin"
               >登陆
               </el-button
               >
@@ -24,7 +24,7 @@
             <el-form-item label="thrid-part">
               <a href="javascript:void(0)" @click="qqLogin"><img src="@/assets/qq.png" height="32"/></a>
               <div class="registerArea">
-                  <router-link to="/register"  float="right" target="_blank">立即注册</router-link>
+                <router-link to="/register" float="right" target="_blank">立即注册</router-link>
               </div>
 
             </el-form-item>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "LoginForm",
   data() {
@@ -49,9 +51,19 @@ export default {
   },
   methods: {
     userLogin: function () {
-      let username = this.userInfo.username
-      let password = this.userInfo.password
-      alert(username + "-" + password + "登陆成功")
+      /*      let username = this.userInfo.username
+            let password = this.userInfo.password*/
+      axios({
+            url: "/api",
+            method: "post",
+            data: {
+              name: 'ld'
+            },
+            header: {"Content-Type": "application/json"}
+          }
+      ).then(ref => {
+        console.log(JSON.stringify(ref.data))
+      });
       this.$emit("loginComplete")
     },
     qqLogin: function () {
@@ -103,10 +115,11 @@ a {
 }
 
 .registerArea {
- position: absolute;
+  position: absolute;
   right: 26px;
 }
-.el-button{
+
+.el-button {
   width: 500px;
 }
 </style>
