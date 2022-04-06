@@ -14,13 +14,14 @@ type EntryController struct {
 //QQ联合登陆验证
 func (c *EntryController) Auth() {
 	params := url.Values{}
-	appId := "123"
+	appId := "101999849"
 	params.Add("response_type", "code")
 	params.Add("client_id", appId)
 	params.Add("state", "test")
 	redirectURI := "/login"
 	str := fmt.Sprintf("%s&redirect_uri=%s", params.Encode(), redirectURI)
 	loginURL := fmt.Sprintf("%s?%s", "https://graph.qq.com/oauth2.0/authorize", str)
+	println(loginURL)
 	c.Redirect(loginURL, http.StatusFound)
 }
 

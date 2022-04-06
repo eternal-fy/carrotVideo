@@ -1,6 +1,5 @@
 <template>
-  <div>
-    a
+  <div class="registerPage">
     <RegisterForm></RegisterForm>
   </div>
 </template>
@@ -14,5 +13,11 @@ export default {
 </script>
 
 <style scoped>
+.registerPage{
 
+  background-image: url("../../assets/star.png");
+  width: 100%;
+  height: 768px;
+  background-size: cover;
+}
 </style>
