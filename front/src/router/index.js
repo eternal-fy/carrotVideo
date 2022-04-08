@@ -10,10 +10,13 @@ import Thriller from "@/components/catagory/Thriller";
 import Video from "@/components/catagory/Video";
 import Vlog from "@/components/catagory/Vlog";
 import War from "@/components/catagory/War";
-import RegisterPage from "@/components/entrance/RegisterPage";
 import mainContext from "@/components/MainContext";
 import Index from "@/components/catagory/Index";
 import mainPage from "@/MainPage";
+
+const RegisterPage = () => {
+    import("@/components/entrance/RegisterPage")
+}
 
 const routerHistory = createWebHashHistory()
 const router = createRouter({

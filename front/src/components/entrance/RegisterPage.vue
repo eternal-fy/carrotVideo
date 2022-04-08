@@ -14,6 +14,7 @@ export default {
 
 <style scoped>
 .registerPage{
+  background: url("../../assets/star.png");
   width: 100%;
   height: 768px;
   background-size: cover;
