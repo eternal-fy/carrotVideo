@@ -17,7 +17,7 @@ import mainPage from "@/MainPage";
 
 const routerHistory = createWebHashHistory()
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: routerHistory,
     // scrollBehavior: true,
     routes: [
         {
