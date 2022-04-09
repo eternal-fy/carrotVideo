@@ -13,7 +13,7 @@ import War from "@/components/catagory/War";
 import mainContext from "@/components/MainContext";
 import Index from "@/components/catagory/Index";
 import mainPage from "@/MainPage";
-
+import Face from "@/components/Face";
 const RegisterPage = () => import("@/components/entrance/RegisterPage")
 
 
@@ -24,7 +24,12 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: '/main-page/main-context/index',
+            redirect: '/Face',
+        },
+        {
+            path: '/Face',
+            name: 'Face',
+            component: Face,
         },
         {
             path: '/main-page',
