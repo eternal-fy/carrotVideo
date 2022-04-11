@@ -37,8 +37,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "LoginForm",
   data() {
@@ -53,8 +51,8 @@ export default {
     userLogin: function () {
       /*      let username = this.userInfo.username
             let password = this.userInfo.password*/
-      axios({
-            url: "/api/entry/login",
+      this.$http({
+            url: "/entry/login",
             method: "get",
             data: {
               name: 'ld'
@@ -68,8 +66,8 @@ export default {
     },
     qqLogin: function () {
       alert("qq登陆成功")
-      axios({
-            url: "/api/entry/auth",
+      this.$http({
+            url: "/entry/auth",
             method: "get",
           }
       ).then(ref => {
