@@ -54,8 +54,8 @@ export default {
       /*      let username = this.userInfo.username
             let password = this.userInfo.password*/
       axios({
-            url: "/api",
-            method: "post",
+            url: "/api/entry/login",
+            method: "get",
             data: {
               name: 'ld'
             },
@@ -68,6 +68,13 @@ export default {
     },
     qqLogin: function () {
       alert("qq登陆成功")
+      axios({
+            url: "/api/entry/auth",
+            method: "get",
+          }
+      ).then(ref => {
+        console.log(JSON.stringify(ref.data))
+      });
       this.$emit("loginComplete")
     }
   }
