@@ -14,7 +14,7 @@ type EntryController struct {
 //QQ联合登陆验证
 func (c *EntryController) Auth() {
 	params := url.Values{}
-	appId := "102000345"
+	appId := "102004026"
 	params.Add("response_type", "code")
 	params.Add("client_id", appId)
 	params.Add("state", "test")
