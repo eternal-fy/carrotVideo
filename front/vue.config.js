@@ -7,7 +7,7 @@ module.exports = {
                 ws:true,//代理websocked
                 changeOrigin:true,//虚拟的站点需要更管origin
                 pathRewrite:{
-                    '^/api':'api'//重写路径
+                    '^/api':''//重写路径
                 }
             }
         },
