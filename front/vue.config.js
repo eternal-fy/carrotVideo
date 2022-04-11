@@ -11,6 +11,7 @@ module.exports = {
                 }
             }
         },
-        disableHostCheck: true
+        historyApiFallback: true,
+        allowedHosts:"all"
     }
 }
