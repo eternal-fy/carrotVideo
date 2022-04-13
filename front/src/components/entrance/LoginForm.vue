@@ -39,8 +39,6 @@
 var QC
 export default {
   name: "LoginForm",
-  mounted() {
-
   data() {
     return {
       userInfo: {
