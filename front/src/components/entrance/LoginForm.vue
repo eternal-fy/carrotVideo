@@ -21,7 +21,7 @@
               </el-button
               >
             </el-form-item>
-            <el-form-item label="thrid-part">
+            <el-form-item label="thrid-part" id="qqLoginBtn">
               <a href="javascript:void(0)" @click="qqLogin"><img src="@/assets/qq.png" height="32"/></a>
               <div class="registerArea">
                 <router-link to="/register" float="right" target="_blank">立即注册</router-link>
@@ -35,10 +35,12 @@
     </div>
   </div>
 </template>
-
 <script>
+var QC
 export default {
   name: "LoginForm",
+  mounted() {
+
   data() {
     return {
       userInfo: {
@@ -62,18 +64,14 @@ export default {
       ).then(ref => {
         console.log(JSON.stringify(ref.data))
       });
-      this.$emit("loginComplete")
+      this.$emit("loginComplete", true)
     },
     qqLogin: function () {
-      alert("qq登陆成功")
-      this.$http({
-            url: "/entry/auth",
-            method: "get",
-          }
-      ).then(ref => {
-        console.log(JSON.stringify(ref.data))
+      QC.Login({
+        btnId:"qqLoginBtn"	//插入按钮的节点id
       });
-      this.$emit("loginComplete")
+      alert("qq登陆成功")
+      this.$emit("loginComplete", true)
     }
   }
 }

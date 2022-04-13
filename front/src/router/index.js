@@ -15,7 +15,7 @@ import Index from "@/components/catagory/Index";
 import mainPage from "@/MainPage";
 import Face from "@/components/Face";
 const RegisterPage = () => import("@/components/entrance/RegisterPage")
-
+const PersonalCenter = () => import("@/components/personalInfo/personalCenter")
 
 const routerHistory = createWebHashHistory()
 const router = createRouter({
@@ -115,6 +115,14 @@ const router = createRouter({
             path: '/register',
             name: 'register',
             component: RegisterPage,
+            meta: {
+                requiresNotAuth: true
+            }
+        },
+        {
+            path: '/personalCenter',
+            name: 'personalCenter',
+            component: PersonalCenter,
             meta: {
                 requiresNotAuth: true
             }

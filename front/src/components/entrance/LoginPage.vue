@@ -1,11 +1,11 @@
 <template>
-  <div id="loginPage" v-if="loginSwitch">
+  <div id="loginPage" v-if="loginFormShow">
     <div class="blackWrap" >
       <el-icon class="closeIcon" @click="$emit('showSwitch')">
         <close-bold/>
       </el-icon>
     </div>
-    <LoginForm @loginComplete="$emit('showSwitch')"></LoginForm>
+    <LoginForm @loginComplete="loginComplete" ></LoginForm>
   </div>
 
 </template>
@@ -17,10 +17,13 @@ import {CloseBold} from "@element-plus/icons-vue";
 export default {
   name: "LoginPage",
   props: {
-    loginSwitch: Boolean
+    loginFormShow: Boolean
   },
-  methods: function loSwitch() {
-  this.$emit("")
+  methods: {
+    loginComplete:function (flag){
+      this.$emit('loginOn',flag)
+    }
+
   },
 
   components: {LoginForm, CloseBold}

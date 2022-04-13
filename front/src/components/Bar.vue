@@ -1,36 +1,48 @@
 <template>
   <div>
-  <div id="bar">
-    <div class="logoArea"><a  class="logo" href="/"></a></div>
-    <div class="context">
-      <div class="columnContxt">
-      </div>
-      <div class="loginArea">
-            <el-link :underline="false" type="info" href="javascript:void(0)" @click="loginSwitch">个人中心
-              <img width="50" height="50" src="../assets/personalCenter.svg"/>
-            </el-link>
+    <div id="bar">
+      <div class="logoArea"><a class="logo" href="/"></a></div>
+      <div class="context">
+        <div class="columnContxt">
+        </div>
+        <div class="loginArea">
+          <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
+            <div>个人中心1<img width="50" height="50" src="../assets/personalCenter.svg"/></div>
+          </el-link>
+
+          <router-link v-show="islogin" to="/personalCenter" float="right" target="_blank">个人中心2<img width="50"
+                                                                                                     height="50"
+                                                                                                     src="../assets/personalCenter.svg"/>
+          </router-link>
+        </div>
       </div>
     </div>
-  </div>
-  <LoginPage :loginSwitch="loginShow" @showSwitch="loginSwitch"></LoginPage>
+    <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch" @loginOn="loginOn"></LoginPage>
   </div>
 </template>
 
 <script>
 import LoginPage from "@/components/entrance/LoginPage";
+
 export default {
   name: "Column",
-  data(){
-    return{
-      loginShow:false
+  data() {
+    return {
+      islogin: false,
+      loginFormShow: false
     }
   },
-  components:{
+  components: {
     LoginPage
   },
-  methods:{
-    loginSwitch:function (){
-      this.loginShow = !this.loginShow
+  methods: {
+    loginFormSwitch: function () {
+      console.log(this.loginFormShow)
+      this.loginFormShow = !this.loginFormShow
+    },
+    loginOn: function (flag) {
+      this.loginFormSwitch()
+      this.islogin = flag
     }
   }
 }
@@ -54,7 +66,8 @@ export default {
   flex-direction: row;
   padding: 20px 50px;
 }
-.columnContxt{
+
+.columnContxt {
   width: 800px;
 
 }
@@ -65,16 +78,17 @@ export default {
   font-max-size: 16px;
 }
 
-.logoArea{
+.logoArea {
   padding-left: 20px;
   height: 90px;
   min-width: 200px;
 }
-.logo{
-  height:100%;
+
+.logo {
+  height: 100%;
   width: 100%;
   background-image: url("../assets/carrot.png");
-  background-size:  100% 100%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   display: block;
 }
