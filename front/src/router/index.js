@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Table from "@/components/Table";
 import RouteLine from "@/components/RouteLine";
 import Action from "@/components/catagory/Action";
@@ -17,7 +17,7 @@ import Face from "@/components/Face";
 const RegisterPage = () => import("@/components/entrance/RegisterPage")
 const PersonalCenter = () => import("@/components/personalInfo/personalCenter")
 
-const routerHistory = createWebHashHistory()
+const routerHistory = createWebHistory()
 const router = createRouter({
     history: routerHistory,
     // scrollBehavior: true,
