@@ -23,10 +23,10 @@ export default {
     loginComplete:function (flag){
       this.$emit('loginOn',flag)
     }
-
   },
-
-  components: {LoginForm, CloseBold}
+  components: {
+    LoginForm, CloseBold
+  },
 }
 </script>
 

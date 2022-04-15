@@ -7,9 +7,8 @@
         </div>
         <div class="loginArea">
           <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
-            <div>个人中心1<img width="50" height="50" src="../assets/personalCenter.svg"/></div>
+            <div>点击登陆<img width="50" height="50" src="../assets/personalCenter.svg"/></div>
           </el-link>
-
           <router-link v-show="islogin" to="/personalCenter" float="right" target="_blank">个人中心2<img width="50"
                                                                                                      height="50"
                                                                                                      src="../assets/personalCenter.svg"/>
