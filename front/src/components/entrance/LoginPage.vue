@@ -5,7 +5,7 @@
         <close-bold/>
       </el-icon>
     </div>
-    <LoginForm @loginComplete="loginComplete" ></LoginForm>
+    <LoginForm @loginComplete="loginComplete" v-if="loginFormShow"></LoginForm>
   </div>
 
 </template>

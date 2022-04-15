@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       islogin: false,
-      loginFormShow: false
+      loginFormShow: true
     }
   },
   components: {
