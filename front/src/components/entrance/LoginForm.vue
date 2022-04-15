@@ -5,74 +5,78 @@
         <span class="formTitle">登录</span>
         <div class="formContext">
           <el-form
-              label-width="100px"
-              :model="formLabelAlign"
-              style="max-width: 460px"
+            label-width="100px"
+            :model="formLabelAlign"
+            style="max-width: 460px"
           >
             <el-form-item label="username">
-              <el-input v-model="userInfo.username"/>
+              <el-input v-model="userInfo.username" />
             </el-form-item>
             <el-form-item label="password">
-              <el-input v-model="userInfo.password"/>
+              <el-input v-model="userInfo.password" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="userLogin"
-              >登陆
-              </el-button
-              >
+              <el-button type="primary" @click="userLogin">登陆 </el-button>
             </el-form-item>
             <el-form-item label="thrid-part" id="qqLoginBtn">
-              <a href="javascript:void(0)" @click="qqLogin"><img src="@/assets/qq.png" height="32"/></a>
+              <a href="javascript:void(0)" @click="qqLogin"
+                ><img src="@/assets/qq.png" height="32"
+              /></a>
               <div class="registerArea">
-                <router-link to="/register" float="right" target="_blank">立即注册</router-link>
+                <router-link to="/register" float="right" target="_blank"
+                  >立即注册</router-link
+                >
               </div>
-
             </el-form-item>
           </el-form>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 <script>
-var QC
 export default {
   name: "LoginForm",
   data() {
     return {
       userInfo: {
-        username: '',
-        password: ''
-      }
-    }
+        username: "",
+        password: "",
+      },
+    };
+  },
+  mounted() {
+    const oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.src = "https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js";
+    document.body.appendChild(oScript);
   },
   methods: {
     userLogin: function () {
       /*      let username = this.userInfo.username
             let password = this.userInfo.password*/
       this.$http({
-            url: "/entry/login",
-            method: "get",
-            data: {
-              name: 'ld'
-            },
-            header: {"Content-Type": "application/json"}
-          }
-      ).then(ref => {
-        console.log(JSON.stringify(ref.data))
+        url: "/entry/login",
+        method: "get",
+        data: {
+          name: "ld",
+        },
+        header: { "Content-Type": "application/json" },
+      }).then((ref) => {
+        console.log(JSON.stringify(ref.data));
       });
-      this.$emit("loginComplete", true)
+      this.$emit("loginComplete", true);
     },
     qqLogin: function () {
+      // eslint-disable-next-line
       QC.Login({
-        btnId:"qqLoginBtn"	//插入按钮的节点id
+        btnId: "qqLoginBtn", //插入按钮的节点id
       });
-      alert("qq登陆成功")
-      this.$emit("loginComplete", true)
-    }
-  }
-}
+      alert("qq登陆成功");
+      this.$emit("loginComplete", true);
+    },
+  },
+};
 </script>
 
 <style scoped>
