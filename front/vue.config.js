@@ -1,6 +1,6 @@
 module.exports = {
     publicPath: '/',
-/*    devServer:{
+    devServer:{
         proxy:{
             '/api':{
                 target:"http://localhost:9999/",//API服务器地址（更换为你的路径）
@@ -13,5 +13,5 @@ module.exports = {
         },
         historyApiFallback: true,
         allowedHosts:"all"
-    }*/
+    }
 }
