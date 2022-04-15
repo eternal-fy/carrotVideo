@@ -1,7 +1,7 @@
 module.exports = {
     publicPath: '/',
     devServer:{
-        proxy:{
+/*        proxy:{
             '/api':{
                 target:"http://localhost:9999/",//API服务器地址（更换为你的路径）
                 ws:true,//代理websocked
@@ -10,8 +10,9 @@ module.exports = {
                     '^/api':''//重写路径
                 }
             }
-        },
+        },*/
+        disableHostCheck:true,
         historyApiFallback: true,
-        allowedHosts:"all"
+        // allowedHosts:"all"
     }
 }
