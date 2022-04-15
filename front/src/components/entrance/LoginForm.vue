@@ -49,7 +49,7 @@ export default {
     let script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = 'http://connect.qq.com/qc_jssdk.js'
-    script.setAttribute("data-appid", "102004026")
+    script.setAttribute("data-appid", "102005140")
     script.setAttribute("data-redirecturi", "http://www.eternalfy.site/auth")
     document.getElementsByTagName('head')[0].appendChild(script)
     script.onload = function () {
