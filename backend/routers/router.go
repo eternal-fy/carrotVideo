@@ -10,5 +10,6 @@ func init() {
 	beego.InsertFilter("/*", beego.BeforeRouter, security.MultipleAccess())
 	beego.Router("/", &MainController{})
 	beego.AutoRouter(&EntryController{})
+	beego.AutoRouter(&FileController{})
 
 }
