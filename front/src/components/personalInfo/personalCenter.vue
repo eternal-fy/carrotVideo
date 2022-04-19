@@ -2,10 +2,11 @@
   <el-upload
       class="upload-demo"
       drag
-      action="https://jsonplaceholder.typicode.com/posts/"
-      multiple
+      :http-request="fileComplete"
   >
-    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+    <el-icon class="el-icon--upload">
+      <upload-filled/>
+    </el-icon>
     <div class="el-upload__text">
       Drop file here or <em>click to upload</em>
     </div>
@@ -15,12 +16,44 @@
       </div>
     </template>
   </el-upload>
+  <el-button @click="uploadFiles">upload</el-button>
 </template>
+
 
 <script>
 import {UploadFilled} from '@element-plus/icons-vue'
+
 export default {
-  name: "personalCneter",
-  components: {UploadFilled}
+  name: "personalCenter",
+  data() {
+    return {
+      uploadUrl: 'https://eternalfy.site/api/file/uploadfiles',
+      localUrl: '/file/uploadfiles',
+      file: null
+    }
+  },
+  methods: {
+    fileComplete: function (data) {
+      if (this.file == null) {
+        this.file = data.file
+      }
+
+    },
+    uploadFiles: function () {
+      let url = this.localUrl
+      let accessUrl = '/' + this.file.name;//设置上传的访问路径
+      let sendData = new FormData();// 上传文件的data参数
+      sendData.append('file', this.file);
+      sendData.append("accessUrl", accessUrl)
+      console.log(sendData);
+      this.$http.post(url, sendData).then((res) => {
+        console.log(res)
+      })
+    }
+  },
+  components: {
+    UploadFilled
+  },
 }
 </script>
+
