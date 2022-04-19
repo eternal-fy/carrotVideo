@@ -6,6 +6,5 @@ import (
 )
 
 func TestBosService(t *testing.T) {
-
-	bosService.BosUpload()
+	bosService.BosUpload(nil, "username", "backname")
 }

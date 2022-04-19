@@ -1,6 +1,8 @@
-package UserInfo
+package userInfo
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+)
 
 //用户信息表
 type User struct {
@@ -12,6 +14,10 @@ type User struct {
 	Gender    int32 `gorm:"default:0"`
 	Lever     *int32
 	Address   string
-	Phone     string `gorm:"unique"`
-	StarCount int32  //点赞数
+	Phone     string
+	StarCount int64 `gorm:"-"` //点赞数
+}
+
+func (*User) TableName() string {
+	return "user"
 }
