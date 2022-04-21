@@ -9,8 +9,8 @@ type FileController struct {
 	beego.Controller
 }
 
-func (f *FileController) UploadFiles() {
-	_, header, _ := f.GetFile("file")
+func (c *FileController) UploadFiles() {
+	_, header, _ := c.GetFile("file")
 	open, err := header.Open()
 	if err != nil {
 		panic("文件打开失败")

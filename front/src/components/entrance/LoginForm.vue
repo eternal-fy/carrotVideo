@@ -21,8 +21,8 @@
               </el-button
               >
             </el-form-item>
-            <el-form-item label="thrid-part" id="qqLoginBtn">
-              <a href="javascript:void(0)" @click="qqLogin"><img src="@/assets/qq.png" height="32"/></a>
+            <el-form-item label="thrid-part" >
+              <a href="javascript:void(0)"><img src="@/assets/qq.png" @click="qqLogin" height="32"/></a>
               <div class="registerArea">
                 <router-link to="/register" float="right" target="_blank">立即注册</router-link>
               </div>
@@ -46,19 +46,37 @@ export default {
     }
   },
   created() {
-    let script = document.createElement('script')
+  /*  let script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = 'http://connect.qq.com/qc_jssdk.js'
     script.setAttribute("data-appid", "102005140")
     script.setAttribute("data-redirecturi", "http://www.eternalfy.site/auth")
     document.getElementsByTagName('head')[0].appendChild(script)
     script.onload = function () {
-      /* eslint-disable */
+      /!* eslint-disable *!/
       QC.Login({
         btnId: "qqLoginBtn"	//插入按钮的节点id
-      })
-      /* eslint-enable */
-    }
+      },function(reqData, opts){//登录成功
+        //根据返回数据，更换按钮显示状态方法
+        var dom = document.getElementById(opts['btnId']),
+            _logoutTemplate=[
+              //头像
+              '<span><img src="{figureurl}" class="{size_key}"/></span>',
+              //昵称
+              '<span>{nickname}</span>',
+              //退出
+              '<span><a href="javascript:QC.Login.signOut();">退出</a></span>'
+            ].join("");
+        dom && (dom.innerHTML = QC.String.format(_logoutTemplate, {
+          nickname : QC.String.escHTML(reqData.nickname), //做xss过滤
+          figureurl : reqData.figureurl
+        }));
+      }, function(opts){//注销成功
+        alert('QQ登录 注销成功');
+      }
+    )
+      /!* eslint-enable *!/
+    }*/
 
   },
   methods: {
@@ -78,7 +96,16 @@ export default {
       });
       this.$emit("loginComplete", true)
     },
-    qqLogin: function () {
+    qqLogin: async function () {
+      await this.$http({
+            url: "/entry/auth",
+            method: "get",
+          }
+      ).then(ref => {
+        console.log(ref.data)
+        window.open(ref.data)
+      });
+
       alert("qq登陆成功")
       this.$emit("loginComplete", true)
     }

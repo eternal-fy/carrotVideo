@@ -11,8 +11,8 @@ type User struct {
 	Password  string `gorm:"not null"`
 	Name      string
 	Age       *int32
-	Gender    int32 `gorm:"default:0"`
-	Lever     *int32
+	Gender    int32  `gorm:"default:0"`
+	Lever     *int32 //游客为空、普通用户10、超级用户20以及管理员30
 	Address   string
 	Phone     string
 	StarCount int64 `gorm:"-"` //点赞数
