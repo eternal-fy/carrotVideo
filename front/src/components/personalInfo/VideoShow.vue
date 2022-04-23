@@ -16,13 +16,22 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$route.query.id)
     this.videoUrl=this.$route.query.id
   }
 }
 </script>
 
-<style>
+<style scoped>
 .art-video-player{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(0, 0, 0);
 
 }
 .art-video{
@@ -38,9 +47,5 @@ export default {
 video {
   object-fit: contain;
 }
-body {
-  display: block;
-  margin: 8px;
-  background-color: rgb(0, 0, 0);
-}
+
 </style>

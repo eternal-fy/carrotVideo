@@ -1,9 +1,9 @@
 <template>
   <div class="videoList-item">
-    <a href="javascript:void(0)" @click="routeTo" class="videoitem">
+    <router-link :to='{path:"/videoShow/id",query:{id:this.videoResource}}' target="_blank" class="videoitem">
       <div class="videoitem-img"><img class="videoitem-img-img" :src="imgResource"></div>
       <div class="videoitem-botton">{{ infoResource }}</div>
-    </a>
+    </router-link>
   </div>
 
 </template>
@@ -17,9 +17,9 @@ export default {
     infoResource: String,
   },
   methods:{
-    routeTo:function (){
+    /*routeTo:function (){
       this.$router.push({ name: 'videoShow', query: { id: this.videoResource }})
-    }
+    }*/
   }
 }
 </script>

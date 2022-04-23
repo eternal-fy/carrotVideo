@@ -128,7 +128,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/videoShow',
+            path: '/videoShow/:id',
             name: 'videoShow',
             component: VideoShow,
             meta: {
