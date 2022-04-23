@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     loginFormSwitch: function () {
-      console.log(this.loginFormShow)
       this.loginFormShow = !this.loginFormShow
     },
     loginOn: function (flag) {
