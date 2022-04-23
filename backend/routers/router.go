@@ -11,5 +11,6 @@ func init() {
 	beego.Router("/", &MainController{})
 	beego.AutoRouter(&EntryController{})
 	beego.AutoRouter(&FileController{})
+	beego.AutoRouter(&VideoController{})
 
 }
