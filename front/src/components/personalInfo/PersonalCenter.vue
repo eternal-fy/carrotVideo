@@ -1,22 +1,24 @@
 <template>
-  <el-upload
-      class="upload-demo"
-      drag
-      :http-request="fileComplete"
-  >
-    <el-icon class="el-icon--upload">
-      <upload-filled/>
-    </el-icon>
-    <div class="el-upload__text">
-      Drop file here or <em>click to upload</em>
-    </div>
-    <template #tip>
-      <div class="el-upload__tip">
-        jpg/png files with a size less than 500kb
+  <div>
+    <el-upload
+        class="upload-demo"
+        drag
+        :http-request="fileComplete"
+    >
+      <el-icon class="el-icon--upload">
+        <upload-filled/>
+      </el-icon>
+      <div class="el-upload__text">
+        Drop file here or <em>click to upload</em>
       </div>
-    </template>
-  </el-upload>
-  <el-button @click="uploadFiles">upload</el-button>
+      <template #tip>
+        <div class="el-upload__tip">
+          jpg/png files with a size less than 500kb
+        </div>
+      </template>
+    </el-upload>
+    <el-button @click="uploadFiles">upload</el-button>
+  </div>
 </template>
 
 
@@ -24,7 +26,7 @@
 import {UploadFilled} from '@element-plus/icons-vue'
 
 export default {
-  name: "personalCenter",
+  name: "PersonalCenter",
   data() {
     return {
       uploadUrl: 'https://eternalfy.site/api/file/uploadfiles',

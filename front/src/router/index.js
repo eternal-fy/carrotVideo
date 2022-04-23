@@ -15,8 +15,8 @@ import Index from "@/components/catagory/Index";
 import mainPage from "@/MainPage";
 import Face from "@/components/Face";
 const RegisterPage = () => import("@/components/entrance/RegisterPage")
-const PersonalCenter = () => import("@/components/personalInfo/personalCenter")
-
+const PersonalCenter = () => import("@/components/personalInfo/PersonalCenter")
+const VideoShow = () => import("@/components/personalInfo/VideoShow")
 const routerHistory = createWebHistory()
 const router = createRouter({
     history: routerHistory,
@@ -123,6 +123,14 @@ const router = createRouter({
             path: '/personalCenter',
             name: 'personalCenter',
             component: PersonalCenter,
+            meta: {
+                requiresNotAuth: true
+            }
+        },
+        {
+            path: '/videoShow',
+            name: 'videoShow',
+            component: VideoShow,
             meta: {
                 requiresNotAuth: true
             }

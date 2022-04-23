@@ -1,6 +1,6 @@
 <template>
   <div id="routeLine">
-    <Square v-for="(item,index) in routeLines.data" :key="index" :context="item" @click="click">
+    <Square v-for="(item,index) in routeLines.data" :key="index" :context="item" >
     </Square>
   </div>
 </template>
@@ -15,10 +15,6 @@ export default {
 
   },
   methods:{
-    click:function (c){
-      console.log(c)
-      console.log(this)
-    }
   },
   created() {
     this.routeLines=routeLineConfig

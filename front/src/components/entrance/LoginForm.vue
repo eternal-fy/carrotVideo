@@ -49,8 +49,7 @@ export default {
     userLogin: function () {
             let username = this.userInfo.username
             let password = this.userInfo.password
-      this.$http.post({
-            url: "/entry/login",
+      this.$http.post("/entry/login",{
             data: {
               "username": username,
               "password": password
