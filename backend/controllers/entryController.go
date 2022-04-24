@@ -23,9 +23,10 @@ func (c *EntryController) Auth() {
 	c.Ctx.ResponseWriter.Write([]byte(loginURL))
 }
 
-/*func (c *EntryController) GetToken() {
-	code := c.FormValue("code")
-	params := url.Values{}
+func (c *EntryController) GetToken() {
+	code := c.Ctx.Input.Query("access_token")
+	println(code)
+	/*params := url.Values{}
 	params.Add("grant_type", "authorization_code")
 	params.Add("client_id", AppId)
 	params.Add("client_secret", AppKey)
@@ -50,8 +51,8 @@ func (c *EntryController) Auth() {
 	info.ExpiresIn = resultMap["expires_in"]
 
 	GetOpenId(info, w)
-
-}*/
+	*/
+}
 
 func (c *EntryController) Login() {
 	c.Ctx.WriteString("login success")
