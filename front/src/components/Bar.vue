@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div id="bar">
       <div class="logoArea"><a class="logo" href="/"></a></div>
       <div class="context">
@@ -17,7 +16,6 @@
       </div>
     </div>
     <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch" @loginOn="loginOn"></LoginPage>
-  </div>
 </template>
 
 <script>
@@ -48,12 +46,13 @@ export default {
 
 <style scoped>
 #bar {
+  background-color: #ffffff;
   display: flex;
   flex-direction: row;
   position: fixed;
   width: 100%;
   height: 90px;
-  z-index: 10;
+  z-index: 999;
   line-height: 50px;
   overflow: hidden;
   border-bottom: 1px solid rgba(0, 0, 0, 0.11);

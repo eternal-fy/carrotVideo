@@ -62,5 +62,11 @@ export default {
 #mainContext {
   padding-left: 220px;
   padding-top: 120px;
+  height: 100%;
+  background-color: #fafafa;
+  overflow-y: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+
 }
 </style>
