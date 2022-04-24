@@ -30,12 +30,11 @@ func (c *EntryController) GetCode() {
 	params := url.Values{}
 	AppId := "102005140"
 	Secret := "DE7mIahZGj03uWwE"
-	params.Add("response_type", "code")
 	params.Add("client_id", AppId)
 	params.Add("client_secret", Secret)
 	params.Add("code", code)
 	redirectURI := "http%3A%2F%2Feternalfy.site%2Fapi%2Fentry%2Fgettoken"
-	loginURL := fmt.Sprintf("%s?%s&redirect_uri=%s", "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code", params.Encode(), redirectURI)
+	loginURL := fmt.Sprintf("%s&%s&redirect_uri=%s", "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code", params.Encode(), redirectURI)
 	response, _ := http.Get(loginURL)
 	defer response.Body.Close()
 	bs, _ := ioutil.ReadAll(response.Body)
