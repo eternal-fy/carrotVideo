@@ -25,7 +25,8 @@ func (c *EntryController) Auth() {
 
 func (c *EntryController) GetToken() {
 	//code := c.Ctx.Input.Query("access_token")
-	println("hello")
+	ctx := c.Ctx
+	println(ctx)
 
 	/*params := url.Values{}
 	params.Add("grant_type", "authorization_code")
