@@ -58,9 +58,12 @@ func (c *EntryController) GetCode() {
 	loginURL := fmt.Sprintf("%s&%s&redirect_uri=%s", "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code", params.Encode(), redirectURI)
 	response, err := http.Get(loginURL)
 	if err != nil {
-		println(err)
+		panic(err)
 	}
 	defer response.Body.Close()
+
+	println("getToken---url----" + loginURL)
+
 	bytes, _ := ioutil.ReadAll(response.Body)
 	var access Access
 	json.Unmarshal(bytes, &access)
@@ -74,11 +77,13 @@ func (c *EntryController) GetCode() {
 	if err != nil {
 		println(err)
 	}
+	println("getClientId---url----" + tokenUri)
 	defer get.Body.Close()
 	clientBytes, _ := ioutil.ReadAll(response.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.AccessToken, AppId, clientId.Openid)
+	println("getInfo---url----" + infoUri)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
 	ctx := c.Ctx
