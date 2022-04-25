@@ -80,9 +80,11 @@ func (c *EntryController) GetCode() {
 	json.Unmarshal(clientBytes, &clientId)
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.AccessToken, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
-	//all, err := ioutil.ReadAll(resp.Body)
-	http.Post("http://eternalfy.site/main-page/main-context/index", "json", resp.Body)
-
+	all, _ := ioutil.ReadAll(resp.Body)
+	ctx := c.Ctx
+	ctx.ResponseWriter.Write(all)
+	localurl := "http://eternalfy.site/main-page/main-context/index"
+	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
 }
 func (c *EntryController) GetToken() {
 	token := c.Ctx.Input.Query("access_token")
