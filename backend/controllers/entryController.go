@@ -13,12 +13,26 @@ type EntryController struct {
 	beego.Controller
 }
 
+// LoginInfo 获取token
 type LoginInfo struct {
 	UserName string
 	Password string
 }
 
-//QQ联合登陆验证
+// Access 获取token
+type Access struct {
+	AccessToken  string
+	ExpiresIn    string
+	RefreshToken string
+}
+
+//ClientId 获取openID
+type ClientId struct {
+	ClientId string
+	Openid   string
+}
+
+// Auth QQ联合登陆验证
 func (c *EntryController) Auth() {
 	params := url.Values{}
 	AppId := "102005140"
@@ -47,9 +61,28 @@ func (c *EntryController) GetCode() {
 		println(err)
 	}
 	defer response.Body.Close()
-	bs, _ := ioutil.ReadAll(response.Body)
-	body := string(bs)
-	println(body)
+	bytes, _ := ioutil.ReadAll(response.Body)
+	var access Access
+	json.Unmarshal(bytes, &access)
+
+	//获取client_id和openid
+	paramsToken := url.Values{}
+	paramsToken.Add("access_token", access.AccessToken)
+	paramsToken.Add("fmt", "json")
+	tokenUri := fmt.Sprintf("%s%s", "https://graph.qq.com/oauth2.0/me?", paramsToken.Encode())
+	get, err := http.Get(tokenUri)
+	if err != nil {
+		println(err)
+	}
+	defer get.Body.Close()
+	clientBytes, _ := ioutil.ReadAll(response.Body)
+	var clientId ClientId
+	json.Unmarshal(clientBytes, &clientId)
+	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.AccessToken, AppId, clientId.Openid)
+	resp, err := http.Get(infoUri)
+	//all, err := ioutil.ReadAll(resp.Body)
+	http.Post("http://eternalfy.site/main-page/main-context/index", "json", resp.Body)
+
 }
 func (c *EntryController) GetToken() {
 	token := c.Ctx.Input.Query("access_token")
