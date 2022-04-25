@@ -21,15 +21,15 @@ type LoginInfo struct {
 
 // Access 获取token
 type Access struct {
-	AccessToken  string
-	ExpiresIn    string
-	RefreshToken string
+	Access_token  string
+	Expires_in    string
+	Refresh_token string
 }
 
 //ClientId 获取openID
 type ClientId struct {
-	ClientId string
-	Openid   string
+	Client_id string
+	Open_id   string
 }
 
 // Auth QQ联合登陆验证
@@ -70,7 +70,7 @@ func (c *EntryController) GetCode() {
 
 	//获取client_id和openid
 	paramsToken := url.Values{}
-	paramsToken.Add("access_token", access.AccessToken)
+	paramsToken.Add("access_token", access.Access_token)
 	paramsToken.Add("fmt", "json")
 	tokenUri := fmt.Sprintf("%s%s", "https://graph.qq.com/oauth2.0/me?", paramsToken.Encode())
 	get, err := http.Get(tokenUri)
@@ -82,7 +82,7 @@ func (c *EntryController) GetCode() {
 	clientBytes, _ := ioutil.ReadAll(response.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
-	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.AccessToken, AppId, clientId.Openid)
+	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Open_id)
 	println("getInfo---url----" + infoUri)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
