@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
 	"io/ioutil"
@@ -10,6 +11,11 @@ import (
 
 type EntryController struct {
 	beego.Controller
+}
+
+type LoginInfo struct {
+	UserName string
+	Password string
 }
 
 //QQ联合登陆验证
@@ -52,5 +58,10 @@ func (c *EntryController) GetToken() {
 }
 
 func (c *EntryController) Login() {
+	var result LoginInfo
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &result)
+	if err != nil {
+		panic(err)
+	}
 	c.Ctx.WriteString("login success")
 }

@@ -50,11 +50,8 @@ export default {
             let username = this.userInfo.username
             let password = this.userInfo.password
       this.$http.post("/entry/login",{
-            data: {
               "username": username,
               "password": password
-            },
-            header: {"Content-Type": "application/json"}
           }
       ).then(ref => {
         console.log(JSON.stringify(ref.data))

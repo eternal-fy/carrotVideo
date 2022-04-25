@@ -52,7 +52,7 @@ export default {
   position: fixed;
   width: 100%;
   height: 90px;
-  z-index: 999;
+  z-index: 888;
   line-height: 50px;
   overflow: hidden;
   border-bottom: 1px solid rgba(0, 0, 0, 0.11);

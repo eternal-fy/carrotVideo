@@ -17,9 +17,7 @@ export default {
     infoResource: String,
   },
   methods:{
-    /*routeTo:function (){
-      this.$router.push({ name: 'videoShow', query: { id: this.videoResource }})
-    }*/
+
   }
 }
 </script>
