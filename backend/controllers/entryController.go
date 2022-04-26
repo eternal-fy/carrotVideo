@@ -29,7 +29,7 @@ type Access struct {
 //ClientId 获取openID
 type ClientId struct {
 	Client_id string
-	Open_id   string
+	Openid    string
 }
 
 // Auth QQ联合登陆验证
@@ -79,10 +79,10 @@ func (c *EntryController) GetCode() {
 	}
 	println("getClientId---url----" + tokenUri)
 	defer get.Body.Close()
-	clientBytes, _ := ioutil.ReadAll(response.Body)
+	clientBytes, _ := ioutil.ReadAll(get.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
-	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Open_id)
+	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	println("getInfo---url----" + infoUri)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
