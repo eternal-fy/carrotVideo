@@ -62,8 +62,6 @@ func (c *EntryController) GetCode() {
 	}
 	defer response.Body.Close()
 
-	println("getToken---url----" + loginURL)
-
 	bytes, _ := ioutil.ReadAll(response.Body)
 	var access Access
 	json.Unmarshal(bytes, &access)
@@ -77,18 +75,16 @@ func (c *EntryController) GetCode() {
 	if err != nil {
 		println(err)
 	}
-	println("getClientId---url----" + tokenUri)
 	defer get.Body.Close()
 	clientBytes, _ := ioutil.ReadAll(get.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
-	println("getInfo---url----" + infoUri)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
 	ctx := c.Ctx
 	ctx.ResponseWriter.Write(all)
-	localurl := "http://eternalfy.site/main-page/main-context/index"
+	localurl := "/main-page/main-context/index"
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
 }
 func (c *EntryController) GetToken() {
