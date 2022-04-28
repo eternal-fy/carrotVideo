@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	bucketName = "199935"
+	bucketName = "carrot"
 )
 
 var bosClient *bos.Client
@@ -18,7 +18,7 @@ func init() {
 func InitClient() (bosClient *bos.Client) {
 	AK := "6a4695427c1c45218515753d08de7ebc"
 	SK := "405082d5d35b477c8a5390b31f792d11"
-	ENDPOINT := "fwh.bcebos.com"
+	ENDPOINT := "bj.bcebos.com"
 	clientConfig := bos.BosClientConfiguration{
 		Ak:               AK,
 		Sk:               SK,
