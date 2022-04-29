@@ -56,7 +56,6 @@ func (c *EntryController) GetCode() {
 	params.Add("fmt", "json")
 	redirectURI := "http%3A%2F%2Feternalfy.site%2Fmain-page%2Fmain-context%2Findex"
 	loginURL := fmt.Sprintf("%s&%s&redirect_uri=%s", "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code", params.Encode(), redirectURI)
-	return
 	response, err := http.Get(loginURL)
 	if err != nil {
 		panic(err)
