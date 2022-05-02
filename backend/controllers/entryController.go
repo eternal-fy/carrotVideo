@@ -57,8 +57,6 @@ func (c *EntryController) GetCode() {
 	redirectURI := "http%3A%2F%2Feternalfy.site%2Fmain-page%2Fmain-context%2Findex"
 	loginURL := fmt.Sprintf("%s&%s&redirect_uri=%s。", "https://graph.qq.com/oauth2.0/token?grant_type=authorization_code", params.Encode(), redirectURI)
 	ctx := c.Ctx
-	http.Redirect(ctx.ResponseWriter, ctx.Request, loginURL, http.StatusFound)
-	return
 	response, err := http.Get(loginURL)
 	if err != nil {
 		panic(err)
@@ -85,9 +83,9 @@ func (c *EntryController) GetCode() {
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
-	ctx.ResponseWriter.Write(all)
-	localurl := "http://eternalfy.site/main-page/main-context/index?"
+	localurl := "http://eternalfy.site/main-page/main-context/index"
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
+	ctx.ResponseWriter.Write(all)
 }
 func (c *EntryController) GetToken() {
 	token := c.Ctx.Input.Query("access_token")
