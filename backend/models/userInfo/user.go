@@ -7,7 +7,8 @@ import (
 //用户信息表
 type User struct {
 	gorm.Model
-	UserName  string `gorm:"unique;not null;index:addr"`
+	Username  string `gorm:"unique;not null;index:addr"`
+	Appid     string `gorm:"unique;"`
 	Password  string `gorm:"not null"`
 	Name      string
 	Age       *int32

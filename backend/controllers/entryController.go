@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	. "backend/dao/sql/user"
+	"backend/models/userInfo"
+	"backend/util"
 	"encoding/json"
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
@@ -9,14 +12,21 @@ import (
 	"net/url"
 )
 
+const (
+	SUCCESS = "9999"
+	FAIL    = "0000"
+	MAXAGE  = 1000 * 60 * 60 * 24 * 7
+)
+
 type EntryController struct {
 	beego.Controller
 }
 
 // LoginInfo 获取token
-type LoginInfo struct {
-	UserName string
-	Password string
+type ResponseData struct {
+	Code      string      //返回Code,其中9999为成功，0000为失败，其余码为
+	Msg       string      //返回的消息
+	TransData interface{} //需要传输的数据
 }
 
 // Access 获取token
@@ -93,11 +103,91 @@ func (c *EntryController) GetToken() {
 
 }
 
-func (c *EntryController) Login() {
-	var result LoginInfo
-	err := json.Unmarshal(c.Ctx.Input.RequestBody, &result)
+func (c *EntryController) Register() {
+	var user userInfo.User
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
 	if err != nil {
 		panic(err)
 	}
-	c.Ctx.WriteString("login success")
+
+	response := &ResponseData{}
+	response.Code = SUCCESS
+	response.Msg = "注册成功！"
+
+	defer func(this *EntryController, response *ResponseData) {
+		this.Data["json"] = response
+		this.ServeJSON()
+	}(c, response)
+
+	username := user.Username
+	password := user.Password
+	validated := c.DataValidated(username, password, response)
+	if !validated {
+		return
+	}
+
+	validate := UserNameValidated(username)
+	if !validate {
+		response.Code = FAIL
+		response.Msg = "用户名已存在！"
+	} else {
+		user.Password = util.Encrypt(user.Password)
+		SaveUser(user)
+	}
+
+}
+
+func (c *EntryController) Login() {
+	var user userInfo.User
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
+	if err != nil {
+		panic(err)
+	}
+	response := &ResponseData{}
+	response.Code = SUCCESS
+	response.Msg = "登陆成功！"
+	defer func(this *EntryController, response *ResponseData) {
+		this.Data["json"] = response
+		this.ServeJSON()
+	}(c, response)
+
+	username := user.Username
+	password := user.Password
+	validated := c.DataValidated(username, password, response)
+	if !validated {
+		return
+	}
+	c.Ctx.SetCookie("name", username)
+	c.Ctx.SetCookie("password", util.SelfMd5(username))
+
+}
+func (c *EntryController) CheckUsername() {
+	var user userInfo.User
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
+	if err != nil {
+		panic(err)
+	}
+	validate := UserNameValidated(user.Username)
+	response := &ResponseData{}
+	response.Code = FAIL
+	if validate {
+		response.Code = SUCCESS
+	}
+	c.Data["json"] = &response
+	c.ServeJSON()
+}
+
+/*
+DataValidated
+判断用户名和密码数据的有效性
+*/
+func (c *EntryController) DataValidated(username, password string, response *ResponseData) bool {
+	usernameLen := len(username)
+	passwordLen := len(password)
+	if usernameLen < 2 || usernameLen > 16 || passwordLen < 6 || passwordLen > 16 {
+		response.Code = FAIL
+		response.Msg = "用户名或者密码长度异常！"
+		return false
+	}
+	return true
 }
