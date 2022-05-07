@@ -94,8 +94,14 @@ func (c *EntryController) GetCode() {
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
 	localurl := "http://eternalfy.site/main-page/main-context/index"
+	println(all)
+	username := util.RandStringWithTime()
+	randSequence := util.RandStringWithTime()
+	c.Ctx.SetCookie("name", username)
+	c.Ctx.SetCookie("rand-sequence", randSequence)
+	c.SetSession(username, randSequence)
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
-	ctx.ResponseWriter.Write(all)
+
 }
 func (c *EntryController) GetToken() {
 	token := c.Ctx.Input.Query("access_token")
@@ -157,9 +163,10 @@ func (c *EntryController) Login() {
 	if !validated {
 		return
 	}
+	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username)
-	c.Ctx.SetCookie("password", util.SelfMd5(username))
-
+	c.Ctx.SetCookie("rand-sequence", randSequence)
+	c.SetSession(username, randSequence)
 }
 func (c *EntryController) CheckUsername() {
 	var user userInfo.User
