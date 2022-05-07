@@ -5,6 +5,9 @@ import (
 	"fmt"
 	beego "github.com/beego/beego/v2/server/web"
 	"golang.org/x/crypto/scrypt"
+	"math/rand"
+	"strconv"
+	"time"
 )
 
 func Encrypt(password string) string {
@@ -19,4 +22,17 @@ func Encrypt(password string) string {
 func SelfMd5(str string) string {
 	sum := md5.Sum([]byte(str))
 	return fmt.Sprintf("%x", sum)
+}
+
+/*
+RandStringWithTime
+带有时间的随机值
+*/
+func RandStringWithTime() string {
+	now := time.Now()
+	str := fmt.Sprintf("%2d%2d%7d", now.Month(), now.Day(), now.Nanosecond())
+	num := rand.Int()
+	itoa := strconv.Itoa(num)
+	str = Encrypt(str + itoa)
+	return str
 }
