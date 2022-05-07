@@ -13,15 +13,16 @@
               <el-input v-model="userInfo.username"/>
             </el-form-item>
             <el-form-item label="password">
-              <el-input v-model="userInfo.password"/>
+              <el-input type="password" v-model="userInfo.password"/>
             </el-form-item>
+            <p class="warning">{{ userInfoWarning.warningMsg }}</p>
             <el-form-item>
               <el-button type="primary" @click="userLogin"
               >登陆
               </el-button
               >
             </el-form-item>
-            <el-form-item label="thrid-part" >
+            <el-form-item label="thrid-part">
               <a href="javascript:void(0)"><img src="@/assets/qq.png" @click="qqLogin" height="32"/></a>
               <div class="registerArea">
                 <router-link to="/register" float="right" target="_blank">立即注册</router-link>
@@ -42,16 +43,27 @@ export default {
       userInfo: {
         username: '',
         password: ''
+      },
+      userInfoWarning: {
+        warningMsg: ''
       }
     }
   },
   methods: {
     userLogin: function () {
-            let username = this.userInfo.username
-            let password = this.userInfo.password
-      this.$http.post("/entry/login",{
-              "username": username,
-              "password": password
+      let username = this.userInfo.username
+      let password = this.userInfo.password
+      if (password.length < 6) {
+        this.userInfoWarning.warningMsg = '密码长度应该大于6'
+        return
+      }
+      if (username.length < 2) {
+        this.userInfoWarning.warningMsg = '用户名太短'
+        return
+      }
+      this.$http.post("/entry/login", {
+            "username": username,
+            "password": password
           }
       ).then(ref => {
         console.log(JSON.stringify(ref.data))
@@ -119,5 +131,8 @@ a {
 
 .el-button {
   width: 500px;
+}
+.warning {
+  color: red;
 }
 </style>

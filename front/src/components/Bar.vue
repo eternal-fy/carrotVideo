@@ -1,21 +1,23 @@
 <template>
-    <div id="bar">
-      <div class="logoArea"><a class="logo" href="/"></a></div>
-      <div class="context">
-        <div class="columnContxt">
-        </div>
+  <div id="bar">
+    <div class="logoArea"><a class="logo" href="/"></a></div>
+    <div class="context">
+      <div class="columnContxt">
         <div class="loginArea">
           <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
-            <div>点击登陆<img width="50" height="50" src="../assets/personalCenter.svg"/></div>
+            点击登陆<img height="40" width="30" src="../assets/personalCenter.svg"/>
           </el-link>
-          <router-link v-show="islogin" to="/personalCenter" float="right" target="_blank">个人中心2<img width="50"
-                                                                                                     height="50"
-                                                                                                     src="../assets/personalCenter.svg"/>
+          <div >
+
+          </div>
+          <router-link v-show="islogin" to="/personalCenter" float="right" target="_blank">个人中心2
           </router-link>
         </div>
       </div>
+
     </div>
-    <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch" @loginOn="loginOn"></LoginPage>
+  </div>
+  <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch" @loginOn="loginOn"></LoginPage>
 </template>
 
 <script>
@@ -39,6 +41,10 @@ export default {
     loginOn: function (flag) {
       this.loginFormSwitch()
       this.islogin = flag
+    },
+    loginout: function (){
+
+      
     }
   }
 }
@@ -47,8 +53,6 @@ export default {
 <style scoped>
 #bar {
   background-color: #ffffff;
-  display: flex;
-  flex-direction: row;
   position: fixed;
   width: 100%;
   height: 90px;
@@ -59,26 +63,28 @@ export default {
 }
 
 .context {
-  display: flex;
-  flex-direction: row;
   padding: 20px 50px;
+  float: right;
 }
 
 .columnContxt {
-  width: 800px;
-
+  height: 100%;
 }
 
 .loginArea {
-  width: 500px;
-  line-height: 50px;
+  padding-left: 20px;
+  float:right;
+  width: 200px;
+  line-height: 30px;
+  height: 100%;
   font-max-size: 16px;
 }
 
 .logoArea {
   padding-left: 20px;
-  height: 90px;
-  min-width: 200px;
+  height: 100%;
+  width: 200px;
+  float: left;
 }
 
 .logo {
