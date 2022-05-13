@@ -7,11 +7,13 @@
           <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
             点击登陆<img height="40" width="30" src="../assets/personalCenter.svg"/>
           </el-link>
-          <div >
-
+          <div v-show="islogin">
+            <ul class="menu">
+              <p>登陆后的内容</p>
+              <li><router-link  to="/personalCenter" target="_blank">个人中心</router-link></li>
+              <li><a href="javascript:void(0)" @click="logout">注销</a></li>
+            </ul>
           </div>
-          <router-link v-show="islogin" to="/personalCenter" float="right" target="_blank">个人中心2
-          </router-link>
         </div>
       </div>
 
@@ -22,7 +24,6 @@
 
 <script>
 import LoginPage from "@/components/entrance/LoginPage";
-
 export default {
   name: "Column",
   data() {
@@ -34,6 +35,13 @@ export default {
   components: {
     LoginPage
   },
+  mounted(){
+    console.log(document.cookie)
+   let isLogin = this.$checkCookie("name")
+    if (isLogin){
+      this.islogin=true
+    }
+  },
   methods: {
     loginFormSwitch: function () {
       this.loginFormShow = !this.loginFormShow
@@ -42,9 +50,9 @@ export default {
       this.loginFormSwitch()
       this.islogin = flag
     },
-    loginout: function (){
-
-      
+    logout: function () {
+      this.$deleteCookie()
+      this.$router.go(0)
     }
   }
 }
@@ -58,7 +66,6 @@ export default {
   height: 90px;
   z-index: 888;
   line-height: 50px;
-  overflow: hidden;
   border-bottom: 1px solid rgba(0, 0, 0, 0.11);
 }
 
@@ -73,7 +80,7 @@ export default {
 
 .loginArea {
   padding-left: 20px;
-  float:right;
+  float: right;
   width: 200px;
   line-height: 30px;
   height: 100%;
@@ -94,5 +101,18 @@ export default {
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: block;
+}
+
+.menu{
+  list-style: none;
+  line-height: 0px;
+  transition: line-height 0.3s;
+}
+.menu:hover{
+  line-height: 20px;
+}
+
+a{
+  text-decoration: none;
 }
 </style>
