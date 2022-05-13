@@ -15,9 +15,9 @@ func Before() {
 	}
 }
 
-func SaveUser(user User) {
+func SaveUser(user User, username string) {
 	Before()
-	conn.Model(&User{}).Save(&user)
+	conn.Model(&user).Where("username=?", username).Updates(user)
 }
 
 /*
