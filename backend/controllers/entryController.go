@@ -97,8 +97,8 @@ func (c *EntryController) GetCode() {
 	println(all)
 	username := util.RandStringWithTime()
 	randSequence := util.RandStringWithTime()
-	c.Ctx.SetCookie("name", username)
-	c.Ctx.SetCookie("rand-sequence", randSequence)
+	c.Ctx.SetCookie("name", username, "/")
+	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
 	c.SetSession(username, randSequence)
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
 
@@ -138,7 +138,7 @@ func (c *EntryController) Register() {
 		response.Msg = "用户名已存在！"
 	} else {
 		user.Password = util.Encrypt(user.Password)
-		SaveUser(user)
+		SaveUser(user, "ld")
 	}
 
 }
