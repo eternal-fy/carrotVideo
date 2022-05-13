@@ -80,7 +80,6 @@ export default {
             }
             let msg = res.data.Msg
             alert("注册失败！" + msg)
-
           }
       )
     },
