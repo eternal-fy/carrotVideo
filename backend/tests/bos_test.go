@@ -8,7 +8,7 @@ import (
 )
 
 func TestBosServiceUpload(t *testing.T) {
-	open, err := os.Open("D://star.png")
+	open, err := os.Open("D:\\GoCode\\MyGoer\\carrotVideo\\front\\src\\assets\\face.jpg")
 	if err != nil {
 		panic("open fail")
 	}
@@ -16,7 +16,7 @@ func TestBosServiceUpload(t *testing.T) {
 	if err != nil {
 		panic("open fail")
 	}
-	bosService.BosUpload(all, "ld", "star_png")
+	bosService.BosUpload(all, "ld", "ldimg")
 }
 func TestBosServiceGetUrl(t *testing.T) {
 	download := bosService.BosGetUrl("star")

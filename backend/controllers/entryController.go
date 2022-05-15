@@ -163,9 +163,16 @@ func (c *EntryController) Login() {
 	if !validated {
 		return
 	}
+
+	tPassword := GetUser(username).Password
+	encrypt := util.Encrypt(password)
+	if tPassword != encrypt {
+		response.Code = FAIL
+		response.Msg = "密码错误"
+	}
 	randSequence := util.RandStringWithTime()
-	c.Ctx.SetCookie("name", username)
-	c.Ctx.SetCookie("rand-sequence", randSequence)
+	c.Ctx.SetCookie("name", username, "/")
+	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
 	c.SetSession(username, randSequence)
 }
 func (c *EntryController) CheckUsername() {
@@ -198,3 +205,22 @@ func (c *EntryController) DataValidated(username, password string, response *Res
 	}
 	return true
 }
+
+/*
+GetLoginStatus
+判断cookie是否为登录状态，存在session中
+
+func (c *EntryController) GetLoginStatus() {
+	username := c.Ctx.GetCookie("name")
+	randSequence := c.Ctx.GetCookie("rand-sequence")
+	session := c.GetSession(username)
+	response := &ResponseData{}
+	response.Code = SUCCESS
+	response.Msg = "成功登录！"
+	if session != randSequence {
+		response.Code = FAIL
+		response.Msg = "登录失败！"
+	}
+	c.Data["json"] = response
+	c.ServeJSON()
+}*/

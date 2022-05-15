@@ -17,6 +17,8 @@ import Face from "@/components/Face";
 const RegisterPage = () => import("@/components/entrance/RegisterPage")
 const PersonalCenter = () => import("@/components/personalInfo/PersonalCenter")
 const VideoShow = () => import("@/components/personalInfo/VideoShow")
+const PersonalVideos = () => import("@/components/personalInfo/PersonalVideos")
+const PersonalInformation = () => import("@/components/personalInfo/PersonalInformation")
 const routerHistory = createWebHistory()
 const router = createRouter({
     history: routerHistory,
@@ -125,7 +127,19 @@ const router = createRouter({
             component: PersonalCenter,
             meta: {
                 requiresNotAuth: true
-            }
+            },
+            children: [
+                {
+                    path: 'personalVideos',
+                    name: 'PersonalVideos',
+                    component: PersonalVideos,
+                },
+                {
+                    path: 'personalInformation',
+                    name: 'PersonalInformation',
+                    component: PersonalInformation,
+                }
+            ]
         },
         {
             path: '/videoShow/:id',

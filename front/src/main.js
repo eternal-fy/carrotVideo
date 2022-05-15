@@ -26,10 +26,10 @@ app.config.globalProperties.$getCookie = (c_name) => {
     return "";
 }
 app.config.globalProperties.$deleteCookie = () => {
-    let now = new Date();
     document.cookie = "name=" + ""+";path=/";
+/*    let now = new Date();
     now.setMonth(now.getMonth() - 1);
-    document.cookie = "expires=" + now.toUTCString() + ";"+"path=/"
+    document.cookie = "expires=" + now.toUTCString() + ";"+"path=/"*/
 }
 
 app.config.globalProperties.$checkCookie = (c_name) => {
