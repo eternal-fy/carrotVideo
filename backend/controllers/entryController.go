@@ -42,6 +42,13 @@ type ClientId struct {
 	Openid    string
 }
 
+//Qresult 获取QQ三方登录的信息
+type Qresult struct {
+	Nickname       string
+	Gender         string
+	Figureurl_qq_2 string
+}
+
 // Auth QQ联合登陆验证
 func (c *EntryController) Auth() {
 	params := url.Values{}
@@ -90,22 +97,27 @@ func (c *EntryController) GetCode() {
 	clientBytes, _ := ioutil.ReadAll(get.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
+
+	userInfo := GetUserByAppid(clientId.Client_id)
+	println(userInfo)
+
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
 	all, _ := ioutil.ReadAll(resp.Body)
+
+	var qresult Qresult
+	err = json.Unmarshal(all, &qresult)
+	if err != nil {
+		panic(err)
+	}
+
 	localurl := "http://eternalfy.site/main-page/main-context/index"
-	println(all)
 	username := util.RandStringWithTime()
 	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username, "/")
 	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
 	c.SetSession(username, randSequence)
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
-
-}
-func (c *EntryController) GetToken() {
-	token := c.Ctx.Input.Query("access_token")
-	println(token)
 
 }
 
@@ -138,7 +150,7 @@ func (c *EntryController) Register() {
 		response.Msg = "用户名已存在！"
 	} else {
 		user.Password = util.Encrypt(user.Password)
-		SaveUser(user, "ld")
+		CreateUser(user)
 	}
 
 }

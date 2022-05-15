@@ -26,6 +26,15 @@ func SaveUser(user User, username string) {
 }
 
 /*
+CreateUser
+根据用户名，更新user信息
+*/
+func CreateUser(user User) {
+	Before()
+	conn.Model(&user).Create(&user)
+}
+
+/*
 GetUser
 根据用户名，查询user信息
 */
@@ -33,6 +42,17 @@ func GetUser(username string) User {
 	Before()
 	var user User
 	conn.Model(&User{}).Select("*").Where("username=?", username).Find(&user)
+	return user
+}
+
+/*
+GetUserByAppid
+根据用户名，查询user信息
+*/
+func GetUserByAppid(appid string) User {
+	Before()
+	var user User
+	conn.Model(&User{}).Select("*").Where("appid=?", appid).Find(&user)
 	return user
 }
 
