@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    userLogin: function () {
+    userLogin: async function () {
       let username = this.userInfo.username
       let password = this.userInfo.password
       if (password.length < 6) {
@@ -61,14 +61,14 @@ export default {
         this.userInfoWarning.warningMsg = '用户名太短'
         return
       }
-      this.$http.post("/entry/login", {
+      await this.$http.post("/entry/login", {
             "username": username,
             "password": password
           }
       ).then(ref => {
         console.log(JSON.stringify(ref.data))
       });
-      this.$emit("loginComplete", true)
+      this.$router.go(0)
     },
     qqLogin: async function () {
       await this.$http({

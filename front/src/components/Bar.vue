@@ -7,48 +7,79 @@
           <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
             点击登陆<img height="40" width="30" src="../assets/personalCenter.svg"/>
           </el-link>
-          <div v-show="islogin">
-            <ul class="menu">
-              <p>登陆后的内容</p>
-              <li><router-link  to="/personalCenter" target="_blank">个人中心</router-link></li>
-              <li><a href="javascript:void(0)" @click="logout">注销</a></li>
-            </ul>
+          <div v-show="islogin" class="face">
+            <div class="uinfo-head">
+              <router-link class="menu-item" to="/personalCenter" target="_blank">
+                <img :src="userInfo.profileImgUrl" width="50" height="50"/>
+              </router-link>
+            </div>
+            <div class="logout">
+              <el-button  @click="logout">注销</el-button>
+            </div>
           </div>
         </div>
+
       </div>
 
     </div>
   </div>
-  <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch" @loginOn="loginOn"></LoginPage>
+  <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch"></LoginPage>
 </template>
 
 <script>
 import LoginPage from "@/components/entrance/LoginPage";
+
 export default {
   name: "Column",
   data() {
     return {
       islogin: false,
-      loginFormShow: false
+      loginFormShow: false,
+      userInfo: {
+        name: '',
+        age: Number,
+        gender: Number,
+        level: Number,
+        address: '',
+        phone: '',
+        profileImgUrl: ''
+
+      }
     }
   },
   components: {
     LoginPage
   },
-  mounted(){
-    console.log(document.cookie)
-   let isLogin = this.$checkCookie("name")
-    if (isLogin){
-      this.islogin=true
-    }
+  mounted() {
+    this.$http.post("user/getinformation")
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.islogin = true
+            let data = res.data.TransData
+            this.userInfo.name = data.Name
+            this.userInfo.age = data.Age
+            this.userInfo.gender = data.Gender
+            this.userInfo.level = data.Level
+            this.userInfo.address = data.Address
+            this.userInfo.phone = data.Phone
+          }
+          this.$http.post("user/getuserimgurl")
+              .then((res) => {
+                if (res.data.Code == 9999) {
+                  this.islogin = true
+                  this.userInfo.profileImgUrl = res.data.TransData
+                  return
+                }
+                this.islogin = false
+
+              })
+        })
+
+
   },
   methods: {
     loginFormSwitch: function () {
       this.loginFormShow = !this.loginFormShow
-    },
-    loginOn: function (flag) {
-      this.loginFormSwitch()
-      this.islogin = flag
     },
     logout: function () {
       this.$deleteCookie()
@@ -79,6 +110,7 @@ export default {
 }
 
 .loginArea {
+  display: flex;
   padding-left: 20px;
   float: right;
   width: 200px;
@@ -103,16 +135,28 @@ export default {
   display: block;
 }
 
-.menu{
-  list-style: none;
-  line-height: 0px;
-  transition: line-height 0.3s;
-}
-.menu:hover{
-  line-height: 20px;
+a {
+  text-decoration: none;
 }
 
-a{
-  text-decoration: none;
+
+.uinfo-head {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+img {
+  cursor: pointer;
+}
+
+.face {
+  display: flex;
+  flex-direction: row;
+}
+.logout{
+  line-height: 50px;
 }
 </style>

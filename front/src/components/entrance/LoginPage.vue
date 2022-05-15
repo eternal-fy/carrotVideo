@@ -5,7 +5,7 @@
         <close-bold/>
       </el-icon>
     </div>
-    <LoginForm @loginComplete="loginComplete" ></LoginForm>
+    <LoginForm></LoginForm>
   </div>
 
 </template>
@@ -20,9 +20,6 @@ export default {
     loginFormShow: Boolean
   },
   methods: {
-    loginComplete:function (flag){
-      this.$emit('loginOn',flag)
-    }
   },
   components: {
     LoginForm, CloseBold

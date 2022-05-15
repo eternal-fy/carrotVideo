@@ -1,12 +1,11 @@
 <template>
   <div class="p-information">
-
-    <el-form :model="form" label-width="120px" :disabled="!infoEnable">
+    <el-form :model="userInfo" label-width="120px" :disabled="!infoEnable">
       <el-form-item label="name">
-        <el-input v-model="form.name"/>
+        <el-input v-model="userInfo.name"/>
       </el-form-item>
       <el-form-item label="age">
-        <el-input v-model.number="form.age" type="number" min="0" max="120"
+        <el-input v-model.number="userInfo.age" type="number" min="0" max="120"
                   autocomplete="off"/>
       </el-form-item>
       <el-form-item label="gender">
@@ -14,11 +13,11 @@
         {{ genderShow ? '男' : '女' }}
       </el-form-item>
       <el-form-item label="phone" prop="phone">
-        <el-input v-model="form.phone" type="text" minlength="13" maxlength="13"
+        <el-input v-model="userInfo.phone" type="text" minlength="13" maxlength="13"
         />
       </el-form-item>
       <el-form-item label="address">
-        <el-input v-model="form.address" type="textarea"/>
+        <el-input v-model="userInfo.address" type="textarea"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">submit</el-button>
@@ -26,8 +25,8 @@
       </el-form-item>
     </el-form>
     <el-button v-if="this.infoEnable==false" @click="this.infoEnable = true">change</el-button>
-    <el-button @click="getCookies">getCookies</el-button>
   </div>
+  
 </template>
 
 <script>
@@ -36,15 +35,39 @@ export default {
   data() {
     return {
       genderShow: true,
-      form: {
+      userInfo: {
         name: '',
         age: Number,
         gender: 1,
         phone: '',
         address: '',
       },
-      infoEnable: true
+      infoEnable: false
     }
+  },
+  mounted() {
+    this.$http.post("user/getinformation")
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.islogin = true
+            let data = res.data.TransData
+            this.userInfo.name = data.Name
+            this.userInfo.age = data.Age
+            this.userInfo.gender = data.Gender
+            this.userInfo.level = data.Level
+            this.userInfo.address = data.Address
+            this.userInfo.phone = data.Phone
+          }
+          this.$http.post("user/getuserimgurl")
+              .then((res) => {
+                if (res.data.Code == 9999) {
+                  this.islogin = true
+                  this.userInfo.profileImgUrl = res.data.TransData
+                  return
+                }
+                this.islogin = false
+              })
+        })
   },
   methods: {
     onSubmit: function () {
@@ -71,9 +94,9 @@ export default {
     genderShow: {
       handler(newName) {
         if (newName) {
-          this.form.gender = 1
+          this.userInfo.gender = 1
         } else {
-          this.form.gender = 0
+          this.userInfo.gender = 0
         }
       }
     }

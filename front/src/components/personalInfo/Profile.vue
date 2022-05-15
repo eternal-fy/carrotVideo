@@ -15,8 +15,8 @@
   <hr>
   <div class="menulist">
     <ul>
-      <li class="menu-item">我的信息</li>
-      <li class="menu-item">我的视频</li>
+      <li class="menu-item"><router-link to="/personalCenter/personalInformation" >我的信息</router-link></li>
+      <li class="menu-item"><router-link to="/personalCenter/personalVideos" >我的视频</router-link></li>
     </ul>
   </div>
 
