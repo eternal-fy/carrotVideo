@@ -4,6 +4,7 @@ import (
 	"github.com/baidubce/bce-sdk-go/services/bos"
 	"github.com/baidubce/bce-sdk-go/services/bos/api"
 	"io/ioutil"
+	"net/http"
 )
 
 const (
@@ -50,6 +51,22 @@ func BosUpload(bytes []byte, userName, objectName string) {
 	}
 	println(etag)
 
+}
+
+/*
+BosUploadByUrl
+Params-
+ bytes: 所需要上传文件的字节
+ userName: 上传文件的用户名
+ objectName: 上传的文件名
+*/
+func BosUploadByUrl(url, username, objectName string) {
+	get, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	all, _ := ioutil.ReadAll(get.Body)
+	BosUpload(all, username, objectName)
 }
 
 /*

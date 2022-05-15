@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"backend/dao/bosService"
 	. "backend/dao/sql/user"
 	"backend/models/userInfo"
 	"backend/util"
@@ -97,9 +98,7 @@ func (c *EntryController) GetCode() {
 	clientBytes, _ := ioutil.ReadAll(get.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
-
-	userInfo := GetUserByAppid(clientId.Client_id)
-	println(userInfo.Username)
+	user := GetUserByAppid(clientId.Client_id)
 
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
@@ -110,10 +109,25 @@ func (c *EntryController) GetCode() {
 	if err != nil {
 		panic(err)
 	}
-	qq2 := qresult.Figureurl_qq_2
-	println(qq2)
+
+	var newRecord userInfo.User
+
+	if user.ID == 0 {
+		username := util.RandStringWithTime()
+		newRecord.Username = username
+		newRecord.Appid = clientId.Client_id
+		var genderNum int32
+		genderNum = 0
+		if qresult.Gender == "男" {
+			genderNum = 1
+		}
+		newRecord.Gender = genderNum
+		newRecord.Name = qresult.Nickname
+		newRecord.Profileimgname = username + "img"
+		bosService.BosUploadByUrl(qresult.Figureurl_qq_2, username, newRecord.Profileimgname)
+	}
+	username := user.Username
 	localurl := "http://eternalfy.site/main-page/main-context/index"
-	username := util.RandStringWithTime()
 	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username, "/")
 	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
