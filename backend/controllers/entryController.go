@@ -99,7 +99,7 @@ func (c *EntryController) GetCode() {
 	json.Unmarshal(clientBytes, &clientId)
 
 	userInfo := GetUserByAppid(clientId.Client_id)
-	println(userInfo)
+	println(userInfo.Username)
 
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
