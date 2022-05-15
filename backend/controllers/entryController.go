@@ -110,7 +110,8 @@ func (c *EntryController) GetCode() {
 	if err != nil {
 		panic(err)
 	}
-
+	qq2 := qresult.Figureurl_qq_2
+	println(qq2)
 	localurl := "http://eternalfy.site/main-page/main-context/index"
 	username := util.RandStringWithTime()
 	randSequence := util.RandStringWithTime()
