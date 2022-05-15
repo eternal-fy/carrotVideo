@@ -111,9 +111,9 @@ func (c *EntryController) GetCode() {
 	}
 
 	var newRecord userInfo.User
-
+	var username string
 	if user.ID == 0 {
-		username := util.RandStringWithTime()
+		username = util.RandStringWithTime()
 		newRecord.Username = username
 		newRecord.Appid = clientId.Client_id
 		var genderNum int32
@@ -125,8 +125,9 @@ func (c *EntryController) GetCode() {
 		newRecord.Name = qresult.Nickname
 		newRecord.Profileimgname = username + "img"
 		bosService.BosUploadByUrl(qresult.Figureurl_qq_2, username, newRecord.Profileimgname)
+	} else {
+		username = user.Username
 	}
-	username := user.Username
 	localurl := "http://eternalfy.site/main-page/main-context/index"
 	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username, "/")
