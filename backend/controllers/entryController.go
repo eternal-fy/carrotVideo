@@ -124,6 +124,7 @@ func (c *EntryController) GetCode() {
 		newRecord.Gender = genderNum
 		newRecord.Name = qresult.Nickname
 		newRecord.Profileimgname = username + "img"
+		CreateUser(newRecord)
 		bosService.BosUploadByUrl(qresult.Figureurl_qq_2, username, newRecord.Profileimgname)
 	} else {
 		username = user.Username
