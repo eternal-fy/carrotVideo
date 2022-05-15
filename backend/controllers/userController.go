@@ -15,11 +15,13 @@ type UserInfo struct {
 }
 
 func (c *UserController) SaveInformation() {
-	username := c.Ctx.GetCookie("name")
-	randSequence := c.Ctx.GetCookie("rand-sequence")
-	session := c.GetSession(username)
-	if randSequence == session {
-		println("success")
+	validated := CheckUser(c)
+	response := &ResponseData{}
+	defer LastSolve(c, response)
+	if !validated {
+		response.Code = FAIL
+		response.Msg = "密码错误！"
+		return
 	}
 	var user UserInfo
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &user)
@@ -27,9 +29,53 @@ func (c *UserController) SaveInformation() {
 		panic("数据异常")
 	}
 	dao.SaveUser(user.PersonalInfo, "ld")
-	response := &ResponseData{}
 	response.Code = SUCCESS
-	c.Data["json"] = &response
-	c.ServeJSON()
 
+}
+
+// GetInformation 获取用户的基本信息
+func (c *UserController) GetInformation() {
+	username := c.Ctx.GetCookie("name")
+	validated := CheckUser(c)
+	response := &ResponseData{}
+	defer LastSolve(c, response)
+	if !validated {
+		response.Code = FAIL
+		response.Msg = "密码错误！"
+		return
+	}
+	user := dao.GetUser(username)
+	user.Password = ""
+	response.TransData = user
+	response.Code = SUCCESS
+}
+
+// GetUserImgUrl 获取用户的头像
+func (c *UserController) GetUserImgUrl() {
+	username := c.Ctx.GetCookie("name")
+	validated := CheckUser(c)
+	response := &ResponseData{}
+	defer LastSolve(c, response)
+	if !validated {
+		response.Code = FAIL
+		response.Msg = "密码错误！"
+		return
+	}
+	url := dao.GetProfileImgUrl(username)
+	response.TransData = url
+	response.Code = SUCCESS
+}
+
+func CheckUser(c *UserController) bool {
+	username := c.Ctx.GetCookie("name")
+	randSequence := c.Ctx.GetCookie("rand-sequence")
+	session := c.GetSession(username)
+	if session != randSequence {
+		return false
+	}
+	return true
+}
+func LastSolve(this *UserController, response *ResponseData) {
+	this.Data["json"] = response
+	this.ServeJSON()
 }
