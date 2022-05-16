@@ -34,7 +34,6 @@ export default {
 .content-main {
   display: flex;
   width: 100%;
-  height: 500px;
   margin: 0 auto;
   padding: 130px 50px;
   background-color: #f7f7f7;

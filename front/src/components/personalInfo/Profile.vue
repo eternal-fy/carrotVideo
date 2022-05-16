@@ -2,7 +2,7 @@
 <div class="profile">
   <div class="profileImg">
     <div class="uinfo-head">
-      <img src="../../assets/face.jpg" width="100" height="100"/>
+      <img :src="profileImgUrl" width="100" height="100"/>
     </div>
     <h1 class="uinfo-name">ice、wind</h1>
     <div class="uinfo-info"></div>
@@ -25,7 +25,21 @@
 
 <script>
 export default {
-  name: "Profile"
+  name: "Profile",
+  date(){
+    return {
+      profileImgUrl:''
+    }
+  },
+  mounted() {
+    this.$http.post("user/getuserimgurl")
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.profileImgUrl = res.data.TransData
+            return
+          }
+        })
+  }
 }
 </script>
 

@@ -1,38 +1,58 @@
 <template>
-  <div class="upload-area">
-    <el-upload
-        class="upload-demo"
-        drag
-        :http-request="fileComplete"
-    >
-      <el-icon class="el-icon--upload">
-        <upload-filled/>
-      </el-icon>
-      <div class="el-upload__text">
-        Drop file here or <em>click to upload</em>
-      </div>
-      <template #tip>
-        <div class="el-upload__tip">
-          jpg/png files with a size less than 500kb
+  <div class="videoArea">
+    <div>
+      <VideoSquare v-for="(item,index) in videoData" :key="index" :video-resource="item.VideoResource"
+                   :img-resource="item.ImgResource" :info-resource="item.InfoResource"
+      ></VideoSquare>
+    </div>
+    <hr/>
+    <div class="upload-area">
+      <el-upload
+          class="upload-demo"
+          drag
+          :http-request="fileComplete"
+      >
+        <el-icon class="el-icon--upload">
+          <upload-filled/>
+        </el-icon>
+        <div class="el-upload__text">
+          Drop file here or <em>click to upload</em>
         </div>
-      </template>
-    </el-upload>
-    <el-button @click="uploadFiles">upload</el-button>
+        <template #tip>
+          <div class="el-upload__tip">
+            jpg/png files with a size less than 500kb
+          </div>
+        </template>
+      </el-upload>
+      <el-button @click="uploadFiles">upload</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 import {UploadFilled} from '@element-plus/icons-vue'
+import VideoSquare from "../VideoSquare";
+
 export default {
   name: "PersonalVideos",
-  data(){
+  data() {
     return {
       uploadUrl: 'https://eternalfy.site/api/file/uploadfiles',
       localUrl: '/file/uploadfiles',
-      file: null
+      file: null,
+      videoData: Object
     }
   },
-  methods:{
+  mounted() {
+    this.$http.post("/video/getvideoinfos", {
+          "videoType": "index"
+        }
+    ).then(res => {
+      console.log(res.data)
+      this.videoData = res.data
+    })
+  },
+  methods: {
     fileComplete: function (data) {
       if (this.file == null) {
         this.file = data.file
@@ -50,14 +70,18 @@ export default {
       })
     }
   },
-  components:{
-    UploadFilled
+  components: {
+    UploadFilled, VideoSquare
   }
 }
 </script>
 
 <style scoped>
-.upload-area{
+.upload-area {
+
+}
+
+.videoArea{
   padding: 0px 200px;
 }
 </style>
