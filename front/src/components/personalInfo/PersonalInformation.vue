@@ -72,7 +72,7 @@ export default {
   methods: {
     onSubmit: function () {
       this.$http.post("user/saveinformation", {
-        personalInfo: this.form
+        personalInfo: this.userInfo
       }).then(res => {
         if (res.data.Code == "9999") {
           alert("修改成功！")
