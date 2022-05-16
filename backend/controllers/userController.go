@@ -16,6 +16,7 @@ type UserInfo struct {
 
 func (c *UserController) SaveInformation() {
 	validated := CheckUser(c)
+	username := c.Ctx.GetCookie("name")
 	response := &ResponseData{}
 	defer LastSolve(c, response)
 	if !validated {
@@ -28,7 +29,8 @@ func (c *UserController) SaveInformation() {
 	if err != nil {
 		panic("数据异常")
 	}
-	dao.SaveUser(user.PersonalInfo, "ld")
+
+	dao.SaveUser(user.PersonalInfo, username)
 	response.Code = SUCCESS
 
 }
