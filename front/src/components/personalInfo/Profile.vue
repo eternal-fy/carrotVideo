@@ -2,11 +2,11 @@
 <div class="profile">
   <div class="profileImg">
     <div class="uinfo-head">
-      <img :src="profileImgUrl" width="100" height="100"/>
+        <img :src="profileImgUrl" width="100" height="100"/>{{profileImgUrl}}
     </div>
     <h1 class="uinfo-name">ice、wind</h1>
     <div class="uinfo-info"></div>
-    <hr>
+    <hr/>
   </div>
   <ul class="uinfo-desc">
     <li><h3>粉丝</h3><h1>1</h1></li>
@@ -26,11 +26,6 @@
 <script>
 export default {
   name: "Profile",
-  date(){
-    return {
-      profileImgUrl:''
-    }
-  },
   mounted() {
     this.$http.post("user/getuserimgurl")
         .then((res) => {
@@ -39,7 +34,13 @@ export default {
             return
           }
         })
-  }
+  },
+  data(){
+    return {
+        profileImgUrl:'',
+    }
+  },
+
 }
 </script>
 

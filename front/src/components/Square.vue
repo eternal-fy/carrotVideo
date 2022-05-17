@@ -2,7 +2,6 @@
   <div id="square" >
       <router-link :to="context.link">{{context.name}}</router-link>
   </div>
-
 </template>
 
 <script>
@@ -10,7 +9,6 @@ export default {
   name: "square",
   props:{
     context:Object,
-
   }
 }
 </script>
@@ -33,7 +31,7 @@ a{
   color:#111622;
 }
 a:hover{
-  color: aqua;
+  color: #fd1527;
 }
 
 </style>

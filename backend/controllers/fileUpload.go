@@ -20,7 +20,5 @@ func (c *FileController) UploadFiles() {
 	if err != nil {
 		panic("文件读取失败")
 	}
-
 	println(header)
-
 }

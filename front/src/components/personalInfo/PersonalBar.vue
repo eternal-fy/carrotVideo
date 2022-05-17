@@ -3,9 +3,13 @@
     <div class="p-logoArea"><a class="p-logo" href="/"></a></div>
     <div class="context">
       <div class="columnContxt">
-
+        <h1>{{title}}</h1>
+        <div class="uinfo-head">
+          <router-link  to="/personalCenter/personalInformation" target="_blank">
+            <img :src="profileImgUrl" width="50" height="50"/>
+          </router-link>
+        </div>
       </div>
-
     </div>
   </div>
 
@@ -13,7 +17,24 @@
 
 <script>
 export default {
-  name: "PersonalBar"
+  name: "PersonalBar",
+  props: {
+    title: String
+  },
+  mounted() {
+    this.$http.post("user/getuserimgurl")
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.profileImgUrl = res.data.TransData
+            return
+          }
+        })
+  },
+  data() {
+    return {
+      profileImgUrl: ''
+    }
+  }
 }
 </script>
 
@@ -29,12 +50,14 @@ export default {
 }
 
 .context {
-  padding: 20px 50px;
   float: right;
+  height: 100%;
 }
 
 .columnContxt {
   height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .p-logoArea {
@@ -55,5 +78,15 @@ export default {
 
 a {
   text-decoration: none;
+}
+
+.uinfo-head {
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+img {
+  cursor: pointer;
 }
 </style>

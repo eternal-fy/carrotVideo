@@ -9,18 +9,16 @@
           </el-link>
           <div v-show="islogin" class="face">
             <div class="uinfo-head">
-              <router-link class="menu-item" to="/personalCenter" target="_blank">
+              <router-link class="menu-item" to="/personalCenter/personalInformation" target="_blank">
                 <img :src="userInfo.profileImgUrl" width="50" height="50"/>
               </router-link>
             </div>
             <div class="logout">
-              <el-button  @click="logout">注销</el-button>
+              <el-button @click="logout">注销</el-button>
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
   <LoginPage :loginFormShow="loginFormShow" @showSwitch="loginFormSwitch"></LoginPage>
@@ -43,7 +41,6 @@ export default {
         address: '',
         phone: '',
         profileImgUrl: ''
-
       }
     }
   },
@@ -71,7 +68,6 @@ export default {
                   return
                 }
                 this.islogin = false
-
               })
         })
 
@@ -156,7 +152,8 @@ img {
   display: flex;
   flex-direction: row;
 }
-.logout{
+
+.logout {
   line-height: 50px;
 }
 </style>

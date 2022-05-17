@@ -7,24 +7,58 @@
     </div>
     <hr/>
     <div class="upload-area">
-      <el-upload
-          class="upload-demo"
-          drag
-          :http-request="fileComplete"
-      >
-        <el-icon class="el-icon--upload">
-          <upload-filled/>
-        </el-icon>
-        <div class="el-upload__text">
-          Drop file here or <em>click to upload</em>
-        </div>
-        <template #tip>
-          <div class="el-upload__tip">
-            jpg/png files with a size less than 500kb
+      <div>
+        <el-upload
+            class="upload-demo"
+            accept=".mp4,.avi,.wmv,.mpeg,.m4v,.mov,.MP4,.AVI,.WMV,.MPEG,.M4V,.MOV"
+            drag
+            limit="1"
+            :http-request="fileComplete"
+        >
+          <el-icon class="el-icon--upload">
+            <upload-filled/>
+          </el-icon>
+          <div class="el-upload__text">
+            Drop file here or <em>click to upload</em>
           </div>
-        </template>
-      </el-upload>
-      <el-button @click="uploadFiles">upload</el-button>
+        </el-upload>
+        <el-button @click="uploadFiles">upload</el-button>
+      </div>
+      <div class="videoInfo">
+        <el-form :model="videoInfo" label-width="120px">
+          <el-form-item label="title" :rules="[
+        {
+          required: true,
+          message: 'Please input  title',
+          trigger: 'blur',
+        }]">
+            <el-input v-model="videoInfo.title"/>
+          </el-form-item>
+          <el-form-item label="type" :rules="[
+        {
+          required: true,
+          message: 'Please select',
+          trigger: 'blur',
+        }]">
+              <el-select v-model="videoInfo.type" placeholder="please select your type">
+                <el-option v-for="(item,index) in types" :key="index" :label="item" :value="item" />
+
+              </el-select>
+            </el-form-item>
+          <el-form-item label="description">
+            <el-input v-model="videoInfo.description"/>
+          </el-form-item>
+          <el-upload
+              accept=".jpg,.png,.jpeg,.gif,.JPG,.JPEG"
+              class="upload-demo"
+              :http-request="imgComplete"
+              :limit="1"
+          >
+            <el-button type="primary">选择封面图片</el-button>
+          </el-upload>
+
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -32,39 +66,53 @@
 <script>
 import {UploadFilled} from '@element-plus/icons-vue'
 import VideoSquare from "../VideoSquare";
+import AllType from "@/config/catalog.json"
 
 export default {
   name: "PersonalVideos",
   data() {
     return {
-      uploadUrl: 'https://eternalfy.site/api/file/uploadfiles',
-      localUrl: '/file/uploadfiles',
-      file: null,
-      videoData: Object
+      localUrl: 'file/uploadfiles',
+      videoData: Object,
+      types:[],
+      videoInfo: {
+        videoFile: null,
+        videoImg: null,
+        type: '',
+        title: '',
+        description: ''
+      }
     }
   },
   mounted() {
-    this.$http.post("/video/getvideoinfos", {
+    for(let i=1;i<AllType.data.length;i++){
+       this.types.push(AllType.data[i].indexName)
+    }
+    this.$http.post("video/getvideoinfos", {
           "videoType": "index"
         }
     ).then(res => {
-      console.log(res.data)
       this.videoData = res.data
     })
   },
   methods: {
     fileComplete: function (data) {
-      if (this.file == null) {
-        this.file = data.file
-      }
+      this.videoInfo.videoFile = data.file
+    },
+    imgComplete: function (data) {
+      this.videoInfo.videoImg = data.file
     },
     uploadFiles: function () {
+      if (this.videoInfo.videoFile == null) {
+        return
+      }
       let url = this.localUrl
-      let accessUrl = '/' + this.file.name;//设置上传的访问路径
       let sendData = new FormData();// 上传文件的data参数
-      sendData.append('file', this.file);
-      sendData.append("accessUrl", accessUrl)
-      console.log(sendData);
+      sendData.append('videoFile', this.videoInfo.videoFile);
+      sendData.append('videoImg', this.videoInfo.videoImg);
+      sendData.append('type', this.videoInfo.type);
+      sendData.append('title', this.videoInfo.title);
+      sendData.append('description', this.videoInfo.description);
       this.$http.post(url, sendData).then((res) => {
         console.log(res)
       })
@@ -78,10 +126,15 @@ export default {
 
 <style scoped>
 .upload-area {
-
+  display: flex;
+  flex-direction: row;
 }
 
-.videoArea{
+.videoArea {
   padding: 0px 200px;
+}
+
+.videoInfo {
+  width: 300px;
 }
 </style>

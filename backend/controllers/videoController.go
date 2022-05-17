@@ -18,7 +18,7 @@ type SendData struct {
 	VideoType string
 }
 
-//QQ联合登陆验证
+//GetVideoInfos 获取视频信息
 func (c *VideoController) GetVideoInfos() {
 	var data SendData
 	json.Unmarshal(c.Ctx.Input.RequestBody, &data)

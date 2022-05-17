@@ -12,11 +12,13 @@ import Square from "@/components/Square"
 export default {
   name: "RouteLine",
   data(){
-
+    return {
+      routeLines:Object
+    }
   },
   methods:{
   },
-  created() {
+  mounted() {
     this.routeLines=routeLineConfig
   },
   components:{
@@ -40,4 +42,6 @@ export default {
 #routeLine:hover{
   overflow-y: scroll;
 }
+
+
 </style>

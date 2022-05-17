@@ -1,5 +1,5 @@
 <template>
-  <PersonalBar></PersonalBar>
+  <PersonalBar :title="personalBarTitle"></PersonalBar>
   <div class="content-main">
     <Profile></Profile>
     <router-view></router-view>
@@ -17,13 +17,10 @@ export default {
   name: "PersonalCenter",
   data() {
     return {
-      uploadUrl: 'https://eternalfy.site/api/file/uploadfiles',
-      localUrl: '/file/uploadfiles',
-      file: null
+      personalBarTitle: '个人中心'
     }
   },
-  methods: {
-  },
+  methods: {},
   components: {
     Profile,
     PersonalBar,
@@ -33,7 +30,6 @@ export default {
 <style scoped>
 .content-main {
   display: flex;
-  width: 100%;
   margin: 0 auto;
   padding: 130px 50px;
   background-color: #f7f7f7;
