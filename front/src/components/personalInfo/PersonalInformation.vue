@@ -41,6 +41,7 @@ export default {
         gender: 1,
         phone: '',
         address: '',
+        level:Number
       },
       infoEnable: false
     }

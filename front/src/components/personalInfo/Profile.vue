@@ -1,32 +1,51 @@
 <template>
-<div class="profile">
-  <div class="profileImg">
-    <div class="uinfo-head">
-        <img :src="profileImgUrl" width="100" height="100"/>{{profileImgUrl}}
+  <div class="profile">
+    <div class="profileImg">
+      <div class="uinfo-head">
+        <img :src="profileImgUrl" width="100" height="100"/>{{ profileImgUrl }}
+      </div>
+      <h1 class="uinfo-name">{{ userInfo.name }}</h1>
+      <div class="uinfo-info"></div>
+      <hr/>
     </div>
-    <h1 class="uinfo-name">ice、wind</h1>
-    <div class="uinfo-info"></div>
-    <hr/>
-  </div>
-  <ul class="uinfo-desc">
-    <li><h3>粉丝</h3><h1>1</h1></li>
-    <li><h3>关注</h3><h1>1</h1></li>
-  </ul>
-  <hr>
-  <div class="menulist">
-    <ul>
-      <li class="menu-item"><router-link to="/personalCenter/personalInformation" >我的信息</router-link></li>
-      <li class="menu-item"><router-link to="/personalCenter/personalVideos" >我的视频</router-link></li>
+    <ul class="uinfo-desc">
+      <li><h3>粉丝</h3>
+        <h1>1</h1></li>
+      <li><h3>关注</h3>
+        <h1>1</h1></li>
     </ul>
-  </div>
+    <hr>
+    <div class="menulist">
+      <ul>
+        <li class="menu-item">
+          <router-link to="/personalCenter/personalInformation">我的信息</router-link>
+        </li>
+        <li class="menu-item">
+          <router-link to="/personalCenter/personalVideos">我的视频</router-link>
+        </li>
+      </ul>
+    </div>
 
-</div>
+  </div>
 </template>
 
 <script>
 export default {
   name: "Profile",
   mounted() {
+    this.$http.post("user/getinformation")
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.islogin = true
+            let data = res.data.TransData
+            this.userInfo.name = data.Name
+            this.userInfo.age = data.Age
+            this.userInfo.gender = data.Gender
+            this.userInfo.level = data.Level
+            this.userInfo.address = data.Address
+            this.userInfo.phone = data.Phone
+          }
+        })
     this.$http.post("user/getuserimgurl")
         .then((res) => {
           if (res.data.Code == 9999) {
@@ -34,10 +53,20 @@ export default {
             return
           }
         })
+
+
   },
-  data(){
+  data() {
     return {
-        profileImgUrl:'',
+      profileImgUrl: '',
+      userInfo: {
+        name: '',
+        age: Number,
+        gender: 1,
+        phone: '',
+        address: '',
+        level: Number
+      },
     }
   },
 
@@ -45,7 +74,7 @@ export default {
 </script>
 
 <style scoped>
-.profile{
+.profile {
   background: rgb(255, 255, 255);
   border-radius: 8px;
   flex: 0 0 210px;
@@ -55,20 +84,22 @@ export default {
   padding-top: 20px;
 }
 
-.uinfo-head{
+.uinfo-head {
   width: 100px;
   height: 100px;
   margin: 0 auto;
   border-radius: 50%;
   overflow: hidden;
 }
-.uinfo-name{
+
+.uinfo-name {
   display: block;
   text-align: center;
   font-size: 18px;
   margin: 25px 0;
 }
-.uinfo-info{
+
+.uinfo-info {
   position: relative;
   display: block;
   min-height: 20px;
@@ -76,23 +107,27 @@ export default {
   font-size: 13px;
   text-align: center;
 }
-hr{
+
+hr {
   border: none;
   height: 1px;
   line-height: 1px;
   font-size: 0;
   color: transparent;
-  background-color: rgba(0,0,0,.05);
+  background-color: rgba(0, 0, 0, .05);
   margin: 0 10px;
 }
-.uinfo-desc{
+
+.uinfo-desc {
   padding: 10px 10px;
   overflow: hidden;
 }
-.uinfo-desc ul{
+
+.uinfo-desc ul {
   list-style: none;
 }
-.uinfo-desc li{
+
+.uinfo-desc li {
   width: 50%;
   padding: 15px 0;
   text-align: center;
@@ -100,26 +135,31 @@ hr{
   border-radius: 5px;
   cursor: pointer;
 }
-.uinfo-desc h3{
+
+.uinfo-desc h3 {
   color: #666;
   font-size: 13px;
   margin-bottom: 10px;
 }
-.uinfo-desc h1{
+
+.uinfo-desc h1 {
   color: #000;
   font-weight: 700;
   font-size: 16px;
 }
-.uinfo-desc li h1:hover{
+
+.uinfo-desc li h1:hover {
   color: red;
 }
-.menulist ul{
+
+.menulist ul {
   padding: 20px 8px;
   border: none;
   list-style: none;
 }
-.menu-item{
-  padding: 0!important;
+
+.menu-item {
+  padding: 0 !important;
   text-align: center;
   height: 40px;
   line-height: 40px;
