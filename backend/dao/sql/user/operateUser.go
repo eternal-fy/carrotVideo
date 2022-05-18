@@ -29,9 +29,10 @@ func SaveUser(user User, username string) {
 CreateUser
 根据用户名，更新user信息
 */
-func CreateUser(user User) {
+func CreateUser(user User) error {
 	Before()
-	conn.Model(&user).Create(&user)
+	err := conn.Model(&user).Create(&user).Error
+	return err
 }
 
 /*

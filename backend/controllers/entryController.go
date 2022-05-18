@@ -168,7 +168,11 @@ func (c *EntryController) Register() {
 		response.Msg = "用户名已存在！"
 	} else {
 		user.Password = util.Encrypt(user.Password)
-		CreateUser(user)
+		err := CreateUser(user)
+		if err != nil {
+			response.Code = FAIL
+			response.Msg = err.Error()
+		}
 	}
 
 }
@@ -199,6 +203,7 @@ func (c *EntryController) Login() {
 	if tPassword != encrypt {
 		response.Code = FAIL
 		response.Msg = "密码错误"
+		return
 	}
 	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username, "/")

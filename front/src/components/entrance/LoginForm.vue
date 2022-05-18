@@ -66,9 +66,14 @@ export default {
             "password": password
           }
       ).then(ref => {
-        console.log(JSON.stringify(ref.data))
+        let data = ref.data
+        if (data.Code == 9999) {
+          this.$router.go(0)
+        } else {
+          alert(data.Msg)
+        }
       });
-      this.$router.go(0)
+
     },
     qqLogin: async function () {
       await this.$http({
@@ -132,6 +137,7 @@ a {
 .el-button {
   width: 500px;
 }
+
 .warning {
   color: red;
 }

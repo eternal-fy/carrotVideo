@@ -8,7 +8,7 @@ import (
 type User struct {
 	gorm.Model
 	Username       string `gorm:"unique;not null;index:addr"`
-	Appid          string `gorm:"unique;"` //APPid对应的username生成为带有时间戳和appid的加密值
+	Appid          string //APPid对应的username生成为带有时间戳和appid的加密值
 	Password       string `gorm:"not null"`
 	Name           string
 	Age            int32 `gorm:"default:120"`
