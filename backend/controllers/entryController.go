@@ -98,7 +98,7 @@ func (c *EntryController) GetCode() {
 	clientBytes, _ := ioutil.ReadAll(get.Body)
 	var clientId ClientId
 	json.Unmarshal(clientBytes, &clientId)
-	user := GetUserByAppid(clientId.Client_id)
+	user := GetUserByAppid(clientId.Openid)
 
 	infoUri := fmt.Sprintf("https://graph.qq.com/user/get_user_info?access_token=%s&oauth_consumer_key=%s&openid=%s", access.Access_token, AppId, clientId.Openid)
 	resp, err := http.Get(infoUri)
@@ -115,7 +115,7 @@ func (c *EntryController) GetCode() {
 	if user.ID == 0 {
 		username = util.RandStringWithTime()
 		newRecord.Username = username
-		newRecord.Appid = clientId.Client_id
+		newRecord.Appid = clientId.Openid
 		var genderNum int32
 		genderNum = 0
 		if qresult.Gender == "男" {
