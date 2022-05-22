@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	dao "backend/dao/sql/user"
+	dao "backend/dao/sql/userDao"
 	"backend/models/userInfo"
+	"backend/util"
 	"encoding/json"
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -30,7 +31,7 @@ func (c *UserController) SaveInformation() {
 		panic("数据异常")
 	}
 
-	dao.SaveUser(user.PersonalInfo, username)
+	dao.SaveUser(user.PersonalInfo, util.StringDecode(username))
 	response.Code = SUCCESS
 
 }
@@ -38,6 +39,7 @@ func (c *UserController) SaveInformation() {
 // GetInformation 获取用户的基本信息
 func (c *UserController) GetInformation() {
 	username := c.Ctx.GetCookie("name")
+	username = util.StringDecode(username)
 	validated := CheckUser(c)
 	response := &ResponseData{}
 	defer LastSolve(c, response)
@@ -55,6 +57,7 @@ func (c *UserController) GetInformation() {
 // GetUserImgUrl 获取用户的头像
 func (c *UserController) GetUserImgUrl() {
 	username := c.Ctx.GetCookie("name")
+	username = util.StringDecode(username)
 	validated := CheckUser(c)
 	response := &ResponseData{}
 	defer LastSolve(c, response)
@@ -68,6 +71,7 @@ func (c *UserController) GetUserImgUrl() {
 	response.Code = SUCCESS
 }
 
+//CheckUser cookie值与session值是否对应
 func CheckUser(c *UserController) bool {
 	username := c.Ctx.GetCookie("name")
 	randSequence := c.Ctx.GetCookie("rand-sequence")

@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"backend/dao/bosService"
-	. "backend/dao/sql/user"
+	. "backend/dao/sql/userDao"
 	"backend/models/userInfo"
 	"backend/util"
 	"encoding/json"
@@ -134,7 +134,7 @@ func (c *EntryController) GetCode() {
 	randSequence := util.RandStringWithTime()
 	c.Ctx.SetCookie("name", username, "/")
 	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
-	c.SetSession(username, randSequence)
+	c.SetSession(util.StringEncode(username), randSequence)
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
 
 }
@@ -206,9 +206,9 @@ func (c *EntryController) Login() {
 		return
 	}
 	randSequence := util.RandStringWithTime()
-	c.Ctx.SetCookie("name", username, "/")
+	c.Ctx.SetCookie("name", util.StringEncode(username), "/")
 	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
-	c.SetSession(username, randSequence)
+	c.SetSession(util.StringEncode(username), randSequence)
 }
 func (c *EntryController) CheckUsername() {
 	var user userInfo.User

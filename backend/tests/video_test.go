@@ -1,10 +1,10 @@
 package test
 
 import (
-	"backend/dao/sql/video"
+	"backend/dao/sql/videoDao"
 	"testing"
 )
 
 func TestVideo(t *testing.T) {
-	video.Before()
+	videoDao.Before()
 }

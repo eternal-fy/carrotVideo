@@ -4,9 +4,10 @@ import "github.com/jinzhu/gorm"
 
 // Video 视频信息
 type Video struct {
-	gorm.Model         //其中video+ID为BOS中的对象名,image+ID为封面名称
+	gorm.Model
 	Username    string `gorm:"not null"`
-	ImageId     string `gorm:"not null"` //image+ID为封面图片对象名
+	VideoId     string `gorm:"not null"`
+	ImageId     string `gorm:"not null"`
 	Type        string //视频类型
 	Title       string //视频名
 	Description string //视频描述

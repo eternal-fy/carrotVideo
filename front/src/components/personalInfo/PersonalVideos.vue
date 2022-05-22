@@ -104,7 +104,7 @@ export default {
     },
     uploadFiles: function () {
       if (this.videoInfo.videoFile == null) {
-        return
+        alert('请上传视频文件')
       }
       let url = this.localUrl
       let sendData = new FormData();// 上传文件的data参数
@@ -114,7 +114,7 @@ export default {
       sendData.append('title', this.videoInfo.title);
       sendData.append('description', this.videoInfo.description);
       this.$http.post(url, sendData).then((res) => {
-        console.log(res)
+          alert(res.data.Msg)
       })
     }
   },

@@ -1,7 +1,7 @@
 package test
 
 import (
-	dao "backend/dao/sql/user"
+	dao "backend/dao/sql/userDao"
 	"backend/models/userInfo"
 	"testing"
 )

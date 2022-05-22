@@ -7,7 +7,12 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+var Db *gorm.DB
+
 func GetConn() *gorm.DB {
+	if Db != nil {
+		return Db
+	}
 	host, _ := beego.AppConfig.String("maria-host")
 	username, _ := beego.AppConfig.String("maria-username")
 	password, _ := beego.AppConfig.String("maria-password")

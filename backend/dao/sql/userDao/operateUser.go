@@ -1,4 +1,4 @@
-package user
+package userDao
 
 import (
 	"backend/dao/bosService"
@@ -10,10 +10,8 @@ import (
 var conn *gorm.DB
 
 func Before() {
-	if conn == nil {
-		conn = sql.GetConn()
-		conn.AutoMigrate(&User{})
-	}
+	conn = sql.GetConn()
+	conn.AutoMigrate(&User{})
 }
 
 /*
