@@ -132,7 +132,7 @@ func (c *EntryController) GetCode() {
 	}
 	localurl := "http://eternalfy.site/main-page/main-context/index"
 	randSequence := util.RandStringWithTime()
-	c.Ctx.SetCookie("name", username, "/")
+	c.Ctx.SetCookie("name", util.StringEncode(username), "/")
 	c.Ctx.SetCookie("rand-sequence", randSequence, "/")
 	c.SetSession(util.StringEncode(username), randSequence)
 	http.Redirect(ctx.ResponseWriter, ctx.Request, localurl, http.StatusFound)
