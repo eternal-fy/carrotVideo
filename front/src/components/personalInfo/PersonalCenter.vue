@@ -1,7 +1,7 @@
 <template>
   <PersonalBar :title="personalBarTitle"></PersonalBar>
   <div class="content-main">
-    <Profile></Profile>
+    <Profile :username="username"></Profile>
     <router-view></router-view>
   </div>
 
@@ -15,9 +15,13 @@ import Profile from "./Profile";
 
 export default {
   name: "PersonalCenter",
+  mounted() {
+    this.username = this.$route.query.username
+  },
   data() {
     return {
-      personalBarTitle: '个人中心'
+      personalBarTitle: '个人中心',
+      username:''
     }
   },
   methods: {},

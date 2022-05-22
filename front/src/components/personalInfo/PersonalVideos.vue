@@ -1,8 +1,7 @@
 <template>
   <div class="videoArea">
     <div>
-      <VideoSquare v-for="(item,index) in videoData" :key="index" :video-resource="item.VideoResource"
-                   :img-resource="item.ImgResource" :info-resource="item.InfoResource"
+      <VideoSquare v-for="(item,index) in videoData" :key="index" :videoObject="item"
       ></VideoSquare>
     </div>
     <hr/>
@@ -40,11 +39,11 @@
           message: 'Please select',
           trigger: 'blur',
         }]">
-              <el-select v-model="videoInfo.type" placeholder="please select your type">
-                <el-option v-for="(item,index) in types" :key="index" :label="item" :value="item" />
+            <el-select v-model="videoInfo.type" placeholder="please select your type">
+              <el-option v-for="(item,index) in types" :key="index" :label="item" :value="item"/>
 
-              </el-select>
-            </el-form-item>
+            </el-select>
+          </el-form-item>
           <el-form-item label="description">
             <el-input v-model="videoInfo.description"/>
           </el-form-item>
@@ -74,7 +73,7 @@ export default {
     return {
       localUrl: 'file/uploadfiles',
       videoData: Object,
-      types:[],
+      types: [],
       videoInfo: {
         videoFile: null,
         videoImg: null,
@@ -85,11 +84,13 @@ export default {
     }
   },
   mounted() {
-    for(let i=1;i<AllType.data.length;i++){
-       this.types.push(AllType.data[i].indexName)
+    for (let i = 1; i < AllType.data.length; i++) {
+      this.types.push(AllType.data[i].indexName)
     }
     this.$http.post("video/getvideoinfos", {
-          "videoType": "index"
+          "videoType": "index",
+          "username": "ld",
+          "page": 1,
         }
     ).then(res => {
       this.videoData = res.data
@@ -114,7 +115,7 @@ export default {
       sendData.append('title', this.videoInfo.title);
       sendData.append('description', this.videoInfo.description);
       this.$http.post(url, sendData).then((res) => {
-          alert(res.data.Msg)
+        alert(res.data.Msg)
       })
     }
   },

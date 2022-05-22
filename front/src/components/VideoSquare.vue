@@ -1,8 +1,11 @@
 <template>
   <div class="videoList-item">
-    <router-link :to='{path:"/videoShow/id",query:{id:this.videoResource}}' target="_blank" class="videoitem">
-      <div class="videoitem-img"><img class="videoitem-img-img" :src="imgResource"></div>
-      <div class="videoitem-botton">{{ infoResource }}</div>
+    <router-link :to='{path:"/videoShow/id",query:{videoInfo:JSON.stringify(this.videoObject)}}' target="_blank"
+                 class="videoitem">
+      <div class="videoitem-img"><img class="videoitem-img-img" :src="videoObject.ImgResource"></div>
+      <div class="videoitem-botton">标题：<span>{{ videoObject.VideoModel.Title }}</span>
+        描述：<span>{{ videoObject.VideoModel.Description }}</span>
+      </div>
     </router-link>
   </div>
 
@@ -12,13 +15,9 @@
 export default {
   name: "VideoSquare",
   props: {
-    videoResource: String,
-    imgResource: String,
-    infoResource: String,
+    videoObject: Object
   },
-  methods:{
-
-  }
+  methods: {}
 }
 </script>
 
@@ -44,6 +43,7 @@ export default {
   overflow: hidden;
   background-repeat: no-repeat;
 }
+
 .videoitem-img:hover {
   border-radius: 20px;
 }

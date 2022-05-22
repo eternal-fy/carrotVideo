@@ -9,7 +9,7 @@
           </el-link>
           <div v-show="islogin" class="face">
             <div class="uinfo-head">
-              <router-link class="menu-item" to="/personalCenter/personalInformation" target="_blank">
+              <router-link class="menu-item" :to='{path:"/personalCenter",query:{username:this.userInfo.username}}' target="_blank">
                 <img :src="userInfo.profileImgUrl" width="50" height="50"/>
               </router-link>
             </div>
@@ -34,6 +34,7 @@ export default {
       islogin: false,
       loginFormShow: false,
       userInfo: {
+        username:'',
         name: '',
         age: Number,
         gender: Number,
@@ -53,6 +54,7 @@ export default {
           if (res.data.Code == 9999) {
             this.islogin = true
             let data = res.data.TransData
+            this.userInfo.username=data.Username
             this.userInfo.name = data.Name
             this.userInfo.age = data.Age
             this.userInfo.gender = data.Gender

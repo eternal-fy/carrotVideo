@@ -1,7 +1,7 @@
 <template>
   <div>
-    <VideoSquare v-for="(item,index) in videoData" :key="index" :video-resource= "item.VideoResource" :img-resource="item.ImgResource" :info-resource="item.InfoResource"
-                ></VideoSquare>
+    <VideoSquare v-for="(item,index) in videoData" :key="index" :videoObject="item"
+    ></VideoSquare>
   </div>
 </template>
 
@@ -10,11 +10,13 @@ import VideoSquare from "@/components/VideoSquare";
 
 export default {
   name: "Index",
-  mounted(){
-    this.$http.post( "/video/getvideoinfos",{
-        "videoType": "index"
-    }
-  ).then(res => {
+  mounted() {
+    this.$http.post("video/getvideoinfos", {
+          "videoType": "index",
+          "username": "ld",
+          "page": 1,
+        }
+    ).then(res => {
       this.videoData = res.data
     })
   },

@@ -3,7 +3,7 @@
   <div class="art-video-player">
     <div class="art-video-area">
       <video class="art-video" loop controls name="media">
-        <source :src="videoUrl" type="video/mp4"/>
+        <source :src="videoInfo.VideoResource" type="video/mp4"/>
       </video>
       <div class="video-operate">
         <div class="starArea" @click="star">
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       iconColor: 'black',
-      videoUrl: '',
+      videoInfo:Object,
       personalBarTitle: '播放中心',
       desc:'',
       msgList:[],
@@ -60,7 +60,7 @@ export default {
 
   },
   mounted() {
-    this.videoUrl = this.$route.query.id
+    this.videoInfo = JSON.parse(this.$route.query.videoInfo)
     this.$http.post("user/getuserimgurl")
         .then((res) => {
           if (res.data.Code == 9999) {

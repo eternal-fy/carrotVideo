@@ -2,9 +2,9 @@
   <div class="profile">
     <div class="profileImg">
       <div class="uinfo-head">
-        <img :src="profileImgUrl" width="100" height="100"/>{{ profileImgUrl }}
+        <img :src="profileImgUrl" width="100" height="100"/>
       </div>
-      <h1 class="uinfo-name">{{ userInfo.name }}</h1>
+      <h1 class="uinfo-name">{{ userInfo.Name }}</h1>
       <div class="uinfo-info"></div>
       <hr/>
     </div>
@@ -18,10 +18,11 @@
     <div class="menulist">
       <ul>
         <li class="menu-item">
-          <router-link to="/personalCenter/personalInformation">我的信息</router-link>
+          <router-link :to='{path:"/personalCenter/personalInformation",query:{username:this.username}}'>我的信息
+          </router-link>
         </li>
         <li class="menu-item">
-          <router-link to="/personalCenter/personalVideos">我的视频</router-link>
+          <router-link :to='{path:"/personalCenter/personalVideos",query:{username:this.username}}'>我的视频</router-link>
         </li>
       </ul>
     </div>
@@ -33,40 +34,28 @@
 export default {
   name: "Profile",
   mounted() {
-    this.$http.post("user/getinformation")
-        .then((res) => {
-          if (res.data.Code == 9999) {
-            this.islogin = true
-            let data = res.data.TransData
-            this.userInfo.name = data.Name
-            this.userInfo.age = data.Age
-            this.userInfo.gender = data.Gender
-            this.userInfo.level = data.Level
-            this.userInfo.address = data.Address
-            this.userInfo.phone = data.Phone
-          }
-        })
-    this.$http.post("user/getuserimgurl")
-        .then((res) => {
+    this.$http.post("user/getinformation", {
+      username: this.username
+    }).then((res) => {
+      if (res.data.Code == 9999) {
+        this.userInfo = res.data.TransData
+      }
+    })
+    this.$http.post("user/getuserimgurl", {
+      username: this.username
+    }).then((res) => {
           if (res.data.Code == 9999) {
             this.profileImgUrl = res.data.TransData
-            return
           }
         })
-
-
+  },
+  props: {
+    username: String
   },
   data() {
     return {
       profileImgUrl: '',
-      userInfo: {
-        name: '',
-        age: Number,
-        gender: 1,
-        phone: '',
-        address: '',
-        level: Number
-      },
+      userInfo: Object
     }
   },
 
