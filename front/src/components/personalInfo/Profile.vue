@@ -20,12 +20,12 @@
         <div class="uinfo-info"></div>
         <hr/>
       </div>
-      <ul class="uinfo-desc">
+<!--      <ul class="uinfo-desc">
         <li><h3>粉丝</h3>
           <h1>1</h1></li>
         <li><h3>关注</h3>
           <h1>1</h1></li>
-      </ul>
+      </ul>-->
       <hr>
       <div class="menulist">
         <ul>
