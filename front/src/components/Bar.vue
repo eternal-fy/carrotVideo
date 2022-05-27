@@ -5,7 +5,7 @@
       <div class="columnContxt">
         <div class="loginArea">
           <el-link v-show="!islogin" :underline="false" type="info" href="javascript:void(0)" @click="loginFormSwitch">
-            点击登陆<img height="40" width="30" src="../assets/personalCenter.svg"/>
+            点击登录<img height="40" width="30" src="../assets/personalCenter.svg"/>
           </el-link>
           <div v-show="islogin" class="face">
             <div class="uinfo-head">
@@ -49,7 +49,10 @@ export default {
     LoginPage
   },
   mounted() {
-    this.$http.post("user/getinformation")
+    let sendData = new FormData();// 上传文件的data参数
+    let username = this.$getCookie("name")
+    sendData.append('username',username);
+    this.$http.post("user/getinformation",sendData)
         .then((res) => {
           if (res.data.Code == 9999) {
             this.islogin = true
@@ -62,15 +65,15 @@ export default {
             this.userInfo.address = data.Address
             this.userInfo.phone = data.Phone
           }
-          this.$http.post("user/getuserimgurl")
-              .then((res) => {
-                if (res.data.Code == 9999) {
-                  this.islogin = true
-                  this.userInfo.profileImgUrl = res.data.TransData
-                  return
-                }
-                this.islogin = false
-              })
+        })
+    this.$http.post("user/getuserimgurl",sendData)
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.islogin = true
+            this.userInfo.profileImgUrl = res.data.TransData
+            return
+          }
+          this.islogin = false
         })
 
 

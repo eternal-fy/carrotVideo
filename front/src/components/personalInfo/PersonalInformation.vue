@@ -41,15 +41,13 @@ export default {
   },
   mounted() {
     this.username = this.$route.query.username
-    this.$http.post("user/getinformation")
+    let sendData = new FormData();// 上传文件的data参数
+    sendData.append('username', this.username);
+    this.$http.post("user/getinformation",sendData)
         .then((res) => {
           console.log(res)
           if (res.data.Code == 9999) {
-            this.islogin = true
             this.userInfo = res.data.TransData
-            if (this.userInfo.Gender == 0){
-              this.genderShow = false
-            }
           }
         })
   },

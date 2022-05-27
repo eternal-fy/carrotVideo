@@ -7,6 +7,7 @@
       </video>
       <div class="video-operate">
         <div class="starArea" @click="star">
+          {{ count }}
           <span>点赞</span>
           <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -20,19 +21,20 @@
               <img :src="userinfo.profileImgUrl" width="50" height="50"/>
             </router-link>
           </div>
-          <span>作者：{{userinfo.name}}</span>
-          <span>标题：{{userinfo.title}}</span>
-          <span>描述：{{userinfo.description}}</span>
+          <span>作者：{{ userinfo.name }}</span>
+          <span>标题：{{ videoModelInfo.Title }}</span>
+          <span>描述：{{ videoModelInfo.Description }}</span>
         </div>
       </div>
       <el-form>
-      <el-form-item label="留言" prop="desc">
-        <el-input v-model="desc" type="textarea" />
-      </el-form-item>
+        <el-form-item label="留言" prop="desc">
+          <el-input v-model="desc" type="textarea"/>
+        </el-form-item>
         <el-button @click="msgSubmit">提交</el-button>
       </el-form>
       <div>
-        <msg-box v-for="(item,index) in msgList" :key="index" :msgcontext="item" username="ice、wind:"></msg-box>
+        <msg-box v-for="(item,index) in msgList" :key="index" :msgcontext="item.Desc"
+                 :username="item.NickName"></msg-box>
       </div>
     </div>
   </div>
@@ -41,30 +43,78 @@
 <script>
 import PersonalBar from "./PersonalBar";
 import MsgBox from "../MsgBox";
+
 export default {
   name: "VideoShow",
   data() {
     return {
       iconColor: 'black',
-      videoInfo:Object,
+      videoInfo: Object,
+      videoModelInfo: Object,
       personalBarTitle: '播放中心',
-      desc:'',
-      msgList:[],
+      desc: '',
+      msgList: [],
       userinfo: {
-        name:'ice、wind',
+        name: '',
         profileImgUrl: '',
-        description:'仰望天空',
-        title:'star'
-      }
+      },
+      count: 0
+
     }
 
   },
   mounted() {
     this.videoInfo = JSON.parse(this.$route.query.videoInfo)
-    this.$http.post("user/getuserimgurl")
+    this.videoModelInfo = this.videoInfo.VideoModel
+    let sendData = new FormData();// 上传文件的data参数
+    sendData.append('username', this.videoModelInfo.Username);
+    this.$http.post("user/getuserimgurl", sendData)
         .then((res) => {
           if (res.data.Code == 9999) {
             this.userinfo.profileImgUrl = res.data.TransData
+            return
+          }
+        })
+    this.$http.post("user/getusernickname",
+        sendData
+    )
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.userinfo.name = res.data.TransData
+            return
+          }
+        })
+    let msgData = new FormData();// 上传文件的data参数
+    msgData.append('videoid', this.videoModelInfo.ID);
+    this.$http.post("video/getmsg",
+        msgData
+    ).then((res) => {
+      if (res.data.Code == 9999) {
+        this.msgList = res.data.TransData
+        console.log(this.msgList)
+        return
+      }
+    })
+    let starData = new FormData();
+    starData.append("videoid", this.videoModelInfo.ID)
+    this.$http.post("video/getstar", starData)
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            let flag = res.data.TransData
+            if (flag > 0) {
+              this.iconColor = 'red'
+            } else {
+              this.iconColor = 'black'
+            }
+            return
+          }
+        })
+    let starCountData = new FormData();
+    starCountData.append("videoid", this.videoModelInfo.ID)
+    this.$http.post("video/getstarcount", starCountData)
+        .then((res) => {
+          if (res.data.Code == 9999) {
+            this.count = res.data.TransData
             return
           }
         })
@@ -72,11 +122,47 @@ export default {
   methods: {
     star: function () {
       this.iconColor = this.iconColor == 'red' ? 'black' : 'red'
+
+      let starData = new FormData();
+      starData.append("videoid", this.videoModelInfo.ID)
+      starData.append("author", this.videoModelInfo.Username)
+      this.$http.post("video/star", starData)
+          .then((res) => {
+            if (res.data.Code == 9999) {
+              let starCountData = new FormData();
+              starCountData.append("videoid", this.videoModelInfo.ID)
+              this.$http.post("video/getstarcount", starCountData)
+                  .then((res) => {
+                    if (res.data.Code == 9999) {
+                      this.count = res.data.TransData
+                      return
+                    }
+                  })
+
+            }
+          })
     },
-    msgSubmit:function (){
-      console.log(this.msgList)
-      this.msgList.push(this.desc)
-      this.desc=''
+    msgSubmit: function () {
+      let sendData = new FormData();// 上传文件的data参数
+      sendData.append('videoid', this.videoModelInfo.ID);
+      sendData.append('desc', this.desc);
+      this.$http.post("video/postmsg",
+          sendData
+      ).then((res) => {
+        console.log(res)
+        let msgData = new FormData();// 上传文件的data参数
+        msgData.append('videoid', this.videoModelInfo.ID);
+        this.$http.post("video/getmsg",
+            msgData
+        ).then((res) => {
+          if (res.data.Code == 9999) {
+            this.msgList = res.data.TransData
+            this.desc = ''
+            return
+          }
+        })
+      })
+
     }
   },
   components: {
@@ -130,13 +216,15 @@ video {
   line-height: 50px;
   background-color: whitesmoke;
 }
+
 .uinfo-head {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
 }
-.infoArea span{
+
+.infoArea span {
   margin: 0 50px;
 }
 </style>

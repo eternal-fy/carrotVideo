@@ -2,50 +2,63 @@
   <div class="profile">
     <div class="profileImg">
       <div class="uinfo-head">
-        <img :src="profileImgUrl" width="100" height="100"/>
+        <el-upload
+            accept=".jpg,.png,.jpeg,.gif,.JPG,.JPEG"
+            class="upload-demo"
+            :http-request="imgComplete"
+            :limit="1"
+        >
+          <img :src="profileImgUrl" width="100" height="100"/>
+        </el-upload>
       </div>
-      <h1 class="uinfo-name">{{ userInfo.Name }}</h1>
-      <div class="uinfo-info"></div>
-      <hr/>
     </div>
-    <ul class="uinfo-desc">
-      <li><h3>粉丝</h3>
-        <h1>1</h1></li>
-      <li><h3>关注</h3>
-        <h1>1</h1></li>
-    </ul>
-    <hr>
-    <div class="menulist">
-      <ul>
-        <li class="menu-item">
-          <router-link :to='{path:"/personalCenter/personalInformation",query:{username:this.username}}'>我的信息
-          </router-link>
-        </li>
-        <li class="menu-item">
-          <router-link :to='{path:"/personalCenter/personalVideos",query:{username:this.username}}'>我的视频</router-link>
-        </li>
+    <div class="changeHead">
+      <el-button type="primary">submit</el-button>
+    </div>
+      <div>
+        <h1 class="uinfo-name">{{ userInfo.Name }}</h1>
+        <div class="uinfo-info"></div>
+        <hr/>
+      </div>
+      <ul class="uinfo-desc">
+        <li><h3>粉丝</h3>
+          <h1>1</h1></li>
+        <li><h3>关注</h3>
+          <h1>1</h1></li>
       </ul>
+      <hr>
+      <div class="menulist">
+        <ul>
+          <li class="menu-item">
+            <router-link :to='{path:"/personalCenter/personalInformation",query:{username:this.username}}'>我的信息
+            </router-link>
+          </li>
+          <li class="menu-item">
+            <router-link :to='{path:"/personalCenter/personalVideos",query:{username:this.username}}'>我的视频
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
-
-  </div>
 </template>
 
 <script>
 export default {
   name: "Profile",
   mounted() {
-    this.$http.post("user/getinformation", {
-      username: this.username
-    }).then((res) => {
+    let sendData = new FormData();// 上传文件的data参数
+    let username = this.username
+    sendData.append('username',username);
+    this.$http.post("user/getinformation",sendData).then((res) => {
       if (res.data.Code == 9999) {
         this.userInfo = res.data.TransData
       }
     })
-    this.$http.post("user/getuserimgurl", {
-      username: this.username
-    }).then((res) => {
+    this.$http.post("user/getuserimgurl",sendData)
+        .then((res) => {
           if (res.data.Code == 9999) {
             this.profileImgUrl = res.data.TransData
+            return
           }
         })
   },
@@ -55,9 +68,21 @@ export default {
   data() {
     return {
       profileImgUrl: '',
-      userInfo: Object
+      userInfo: Object,
+      profileNewImgUrl: ''
     }
   },
+  methods: {
+    imgComplete: function (data) {
+      this.profileNewImg = data.file
+      let sendData = new FormData();// 上传文件的data参数
+      sendData.append('profileImg', this.profileNewImg);
+      this.$http.post("user/postprofileimg", sendData).then((res) => {
+        alert(res.data.Msg)
+      })
+
+    },
+  }
 
 }
 </script>
@@ -152,6 +177,9 @@ hr {
   text-align: center;
   height: 40px;
   line-height: 40px;
+}
+.changeHead{
+  padding: 0px 70px;
 }
 
 </style>

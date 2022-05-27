@@ -22,7 +22,10 @@ export default {
     title: String
   },
   mounted() {
-    this.$http.post("user/getuserimgurl")
+    let sendData = new FormData();// 上传文件的data参数
+    let username = this.$getCookie("name")
+    sendData.append('username',username);
+    this.$http.post("user/getuserimgurl",sendData)
         .then((res) => {
           if (res.data.Code == 9999) {
             this.profileImgUrl = res.data.TransData

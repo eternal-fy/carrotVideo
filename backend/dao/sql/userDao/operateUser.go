@@ -3,7 +3,7 @@ package userDao
 import (
 	"backend/dao/bosService"
 	"backend/dao/sql"
-	. "backend/models/userInfo"
+	"backend/models/userInfo"
 	"github.com/jinzhu/gorm"
 )
 
@@ -11,14 +11,14 @@ var conn *gorm.DB
 
 func Before() {
 	conn = sql.GetConn()
-	conn.AutoMigrate(&User{})
+	conn.AutoMigrate(&userInfo.User{})
 }
 
 /*
 SaveUser
 根据用户名，更新user信息
 */
-func SaveUser(user User, username string) {
+func SaveUser(user userInfo.User, username string) {
 	Before()
 	conn.Model(&user).Where("username=?", username).Updates(user)
 }
@@ -27,7 +27,7 @@ func SaveUser(user User, username string) {
 CreateUser
 根据用户名，更新user信息
 */
-func CreateUser(user User) error {
+func CreateUser(user userInfo.User) error {
 	Before()
 	err := conn.Model(&user).Create(&user).Error
 	return err
@@ -37,10 +37,10 @@ func CreateUser(user User) error {
 GetUser
 根据用户名，查询user信息
 */
-func GetUser(username string) User {
+func GetUser(username string) userInfo.User {
 	Before()
-	var user User
-	conn.Model(&User{}).Select("*").Where("username=?", username).Find(&user)
+	var user userInfo.User
+	conn.Model(&userInfo.User{}).Select("*").Where("username=?", username).Find(&user)
 	return user
 }
 
@@ -48,10 +48,10 @@ func GetUser(username string) User {
 GetUserByAppid
 根据用户名，查询user信息
 */
-func GetUserByAppid(appid string) User {
+func GetUserByAppid(appid string) userInfo.User {
 	Before()
-	var user User
-	conn.Model(&User{}).Select("*").Where("appid=?", appid).Find(&user)
+	var user userInfo.User
+	conn.Model(&userInfo.User{}).Select("*").Where("appid=?", appid).Find(&user)
 	return user
 }
 
@@ -62,7 +62,7 @@ UserNameValidated
 func UserNameValidated(userName string) bool {
 	Before()
 	var num int
-	conn.Model(&User{}).Where("userName = ?", userName).Count(&num)
+	conn.Model(&userInfo.User{}).Where("userName = ?", userName).Count(&num)
 	if num == 0 {
 		return true
 	}
@@ -79,4 +79,16 @@ func GetProfileImgUrl(userName string) string {
 	bosName := user.Profileimgname
 	url := bosService.BosGetUrl(bosName)
 	return url
+}
+
+/*
+ChangeProfileImgUrl
+获取用户头像url
+*/
+func ChangeProfileImgUrl(userName, url string) error {
+	Before()
+	var user userInfo.User
+	user.Profileimgname = url
+	err := conn.Model(&userInfo.User{}).Where("userName = ?", userName).Updates(user).Error
+	return err
 }
