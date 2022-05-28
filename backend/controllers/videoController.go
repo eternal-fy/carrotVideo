@@ -29,7 +29,7 @@ func (c *VideoController) GetVideoInfos() {
 	var data SendData
 	json.Unmarshal(c.Ctx.Input.RequestBody, &data)
 	if data.VideoType == "index" {
-		data.VideoType = "video"
+		data.VideoType = ""
 	}
 	size := 8
 
@@ -37,7 +37,7 @@ func (c *VideoController) GetVideoInfos() {
 	if err != nil {
 		panic(err)
 	}
-	infoDTO := make([]VideoInfoDTO, size)
+	infoDTO := make([]VideoInfoDTO, len(videos))
 	for index, _ := range infoDTO {
 		infoDTO[index].VideoModel = videos[index]
 		videoResource := bosService.BosGetUrl(videos[index].VideoId)

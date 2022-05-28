@@ -13,7 +13,6 @@ export default {
   mounted() {
     this.$http.post("video/getvideoinfos", {
           "videoType": "vlog",
-          "username": "ld",
           "page": 1,
         }
     ).then(res => {

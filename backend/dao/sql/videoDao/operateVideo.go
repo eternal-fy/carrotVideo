@@ -33,6 +33,13 @@ func SelectVideoByUsername(username, videoType string, page, size int) ([]videoI
 	var result []videoInfo.Video
 	video.Username = username
 	video.Type = videoType
-	err := conn.Model(&videoInfo.Video{}).Offset(size*(page-1)).Limit(size).Order("created_at").Find(&result, video).Error
+	typelike := "%" + videoType + "%"
+	var err error
+	if username != "" {
+		err = conn.Model(&videoInfo.Video{}).Offset(size*(page-1)).Limit(size).Where("username = ? && type like ?", username, typelike).Order("created_at").Find(&result).Error
+	} else {
+		err = conn.Model(&videoInfo.Video{}).Offset(size*(page-1)).Limit(size).Where("type like ?", typelike).Order("created_at").Find(&result).Error
+	}
+
 	return result, err
 }
