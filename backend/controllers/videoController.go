@@ -33,6 +33,12 @@ func (c *VideoController) GetVideoInfos() {
 	}
 	size := 8
 
+	usernameCookie := c.Ctx.GetCookie("name")
+	username := data.Username
+	if username == usernameCookie {
+		data.Username = util.StringDecode(username)
+	}
+
 	videos, err := videoDao.SelectVideoByUsername(data.Username, data.VideoType, data.Page, size)
 	if err != nil {
 		panic(err)

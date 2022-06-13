@@ -87,9 +87,10 @@ export default {
     for (let i = 1; i < AllType.data.length; i++) {
       this.types.push(AllType.data[i].indexName)
     }
+    let cookie = this.$getCookie("name")
     this.$http.post("video/getvideoinfos", {
           "videoType": "index",
-          "username": "ld",
+          "username": cookie,
           "page": 1,
         }
     ).then(res => {
