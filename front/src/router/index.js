@@ -26,7 +26,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: '/Face',
+            redirect: '/main-page/main-context/index',
         },
         {
             path: '/Face',
