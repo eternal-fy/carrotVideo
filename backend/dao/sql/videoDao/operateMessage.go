@@ -8,7 +8,6 @@ import (
 
 func BeforeMsg() {
 	conn = sql.GetConn()
-	conn.AutoMigrate(&videoInfo.Message{})
 }
 
 type MsgInfo struct {

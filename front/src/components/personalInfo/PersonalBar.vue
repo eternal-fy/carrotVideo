@@ -4,11 +4,11 @@
     <div class="context">
       <div class="columnContxt">
         <h1>{{title}}</h1>
-        <div class="uinfo-head">
+<!--        <div class="uinfo-head">
           <router-link  to="/personalCenter/personalInformation" target="_blank">
             <img :src="profileImgUrl" width="50" height="50"/>
           </router-link>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
     title: String
   },
   mounted() {
-    let sendData = new FormData();// 上传文件的data参数
+/*    let sendData = new FormData();// 上传文件的data参数
     let username = this.$getCookie("name")
     sendData.append('username',username);
     this.$http.post("user/getuserimgurl",sendData)
@@ -31,7 +31,7 @@ export default {
             this.profileImgUrl = res.data.TransData
             return
           }
-        })
+        })*/
   },
   data() {
     return {

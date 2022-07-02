@@ -22,5 +22,6 @@ func GetConn() *gorm.DB {
 	if err != nil {
 		panic("链接数据库失败")
 	}
-	return db
+	Db = db
+	return Db
 }

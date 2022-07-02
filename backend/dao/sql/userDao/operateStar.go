@@ -7,7 +7,6 @@ import (
 
 func BeforeStar() {
 	conn = sql.GetConn()
-	conn.AutoMigrate(&userInfo.Star{})
 }
 
 /*

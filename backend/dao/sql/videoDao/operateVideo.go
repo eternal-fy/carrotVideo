@@ -10,7 +10,6 @@ var conn *gorm.DB
 
 func Before() {
 	conn = sql.GetConn()
-	conn.AutoMigrate(&videoInfo.Video{})
 }
 
 /*

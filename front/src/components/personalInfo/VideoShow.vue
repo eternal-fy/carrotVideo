@@ -95,20 +95,22 @@ export default {
         return
       }
     })
-    let starData = new FormData();
-    starData.append("videoid", this.videoModelInfo.ID)
-    this.$http.post("video/getstar", starData)
-        .then((res) => {
-          if (res.data.Code == 9999) {
-            let flag = res.data.TransData
-            if (flag > 0) {
-              this.iconColor = 'red'
-            } else {
-              this.iconColor = 'black'
+    if (this.$getCookie("name")!=""){
+      let starData = new FormData();
+      starData.append("videoid", this.videoModelInfo.ID)
+      this.$http.post("video/getstar", starData)
+          .then((res) => {
+            if (res.data.Code == 9999) {
+              let flag = res.data.TransData
+              if (flag > 0) {
+                this.iconColor = 'red'
+              } else {
+                this.iconColor = 'black'
+              }
+              return
             }
-            return
-          }
-        })
+          })
+    }
     let starCountData = new FormData();
     starCountData.append("videoid", this.videoModelInfo.ID)
     this.$http.post("video/getstarcount", starCountData)
@@ -120,7 +122,19 @@ export default {
         })
   },
   methods: {
+    checkLogin:function (){
+      let cookie = this.$getCookie("name")
+      if(cookie==""){
+        alert("please login")
+        return false
+      }
+      return true
+    },
     star: function () {
+     let flag = this.checkLogin()
+      if (!flag){
+        return
+      }
       this.iconColor = this.iconColor == 'red' ? 'black' : 'red'
 
       let starData = new FormData();
@@ -143,6 +157,10 @@ export default {
           })
     },
     msgSubmit: function () {
+      let flag = this.checkLogin()
+      if (!flag){
+        return
+      }
       let sendData = new FormData();// 上传文件的data参数
       sendData.append('videoid', this.videoModelInfo.ID);
       sendData.append('desc', this.desc);
@@ -175,6 +193,7 @@ export default {
 <style scoped>
 .art-video-player {
   height: 100%;
+  min-width: 1400px;
   padding: 100px 100px;
   background-color: #fafafa;
 

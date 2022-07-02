@@ -2,7 +2,7 @@
   <div>
     <el-form>
       <el-form-item :label="username" prop="desc" label-width="120px">
-        <el-input  type="textarea" :value="msgcontext"/>
+        <el-input  type="textarea" :value="msgcontext" readonly />
       </el-form-item>
     </el-form>
   </div>
@@ -19,5 +19,7 @@ export default {
 </script>
 
 <style scoped>
-
+input[type="textarea"]{
+  resize:none;
+}
 </style>

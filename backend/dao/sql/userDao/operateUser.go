@@ -11,7 +11,6 @@ var conn *gorm.DB
 
 func Before() {
 	conn = sql.GetConn()
-	conn.AutoMigrate(&userInfo.User{})
 }
 
 /*
@@ -77,6 +76,9 @@ func GetProfileImgUrl(userName string) string {
 	Before()
 	user := GetUser(userName)
 	bosName := user.Profileimgname
+	if bosName == "" {
+		bosName = "defaultIcon"
+	}
 	url := bosService.BosGetUrl(bosName)
 	return url
 }
