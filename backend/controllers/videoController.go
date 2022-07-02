@@ -15,6 +15,7 @@ type VideoController struct {
 }
 type VideoInfoDTO struct {
 	VideoModel    videoInfo.Video
+	AuthorImg     string
 	VideoResource string
 	ImgResource   string
 }
@@ -48,6 +49,8 @@ func (c *VideoController) GetVideoInfos() {
 		infoDTO[index].VideoModel = videos[index]
 		videoResource := bosService.BosGetUrl(videos[index].VideoId)
 		imgResource := bosService.BosGetUrl(videos[index].ImageId)
+
+		infoDTO[index].AuthorImg = userDao.GetProfileImgUrl(videos[index].Username)
 		infoDTO[index].VideoResource = videoResource
 		infoDTO[index].ImgResource = imgResource
 	}

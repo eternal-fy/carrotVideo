@@ -28,7 +28,7 @@
           <el-form-item label="title" :rules="[
         {
           required: true,
-          message: 'Please input  title',
+          message: 'Please input title',
           trigger: 'unblur',
         }]">
             <el-input v-model="videoInfo.title"/>
@@ -37,6 +37,7 @@
         {
           required: true,
           message: 'Please select',
+          trigger: 'unblur',
         }]">
             <el-select v-model="videoInfo.type" placeholder="please select your type">
               <el-option v-for="(item,index) in types" :key="index" :label="item" :value="item"/>
@@ -103,9 +104,29 @@ export default {
     imgComplete: function (data) {
       this.videoInfo.videoImg = data.file
     },
-    uploadFiles: function () {
+    checkInfomationComplete:function (){
       if (this.videoInfo.videoFile == null) {
         alert('请上传视频文件')
+        return false
+      }
+      if (this.videoInfo.videoImg == null) {
+        alert('请上传视频封面')
+        return false
+      }
+      if (this.videoInfo.title == '') {
+        alert('请输入视频标题')
+        return false
+      }
+      if (this.videoInfo.type == '') {
+        alert('请选择视频类型')
+        return false
+      }
+      return true
+    },
+    uploadFiles: function () {
+      let flag = this.checkInfomationComplete()
+      if (!flag){
+        return
       }
       let url = this.localUrl
       let sendData = new FormData();// 上传文件的data参数
