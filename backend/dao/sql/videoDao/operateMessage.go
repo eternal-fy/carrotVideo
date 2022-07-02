@@ -38,7 +38,7 @@ GetMsg
 func GetMsg(videoid string) ([]MsgInfo, error) {
 	BeforeMsg()
 	var list []videoInfo.Message
-	err := conn.Model(&videoInfo.Message{}).Order("created_at").Where("video_id = ?", videoid).Find(&list).Error
+	err := conn.Model(&videoInfo.Message{}).Order("created_at desc").Where("video_id = ?", videoid).Find(&list).Error
 	result := make([]MsgInfo, len(list))
 	for i, _ := range list {
 		name := dao.GetUser(list[i].Username).Name
