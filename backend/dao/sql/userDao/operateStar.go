@@ -48,11 +48,7 @@ UnStar
 */
 func UnStar(videoId, username string) error {
 	BeforeStar()
-	var starModel userInfo.Star
-	starModel.VideoId = videoId
-	starModel.Username = username
-
-	err := conn.Delete(&starModel).Error
+	err := conn.Where("video_id = ? && username = ?", videoId, username).Delete(&userInfo.Star{}).Error
 	return err
 }
 
