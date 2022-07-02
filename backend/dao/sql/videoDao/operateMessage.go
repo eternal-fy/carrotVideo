@@ -4,6 +4,7 @@ import (
 	"backend/dao/sql"
 	dao "backend/dao/sql/userDao"
 	"backend/models/videoInfo"
+	"backend/util"
 )
 
 func BeforeMsg() {
@@ -11,8 +12,9 @@ func BeforeMsg() {
 }
 
 type MsgInfo struct {
-	NickName string
-	Desc     string
+	NickName   string
+	Desc       string
+	CreateTime string
 }
 
 /*
@@ -42,6 +44,7 @@ func GetMsg(videoid string) ([]MsgInfo, error) {
 		name := dao.GetUser(list[i].Username).Name
 		result[i].NickName = name
 		result[i].Desc = list[i].Message
+		result[i].CreateTime = util.ParseTime(list[i].CreatedAt)
 	}
 	return result, err
 }

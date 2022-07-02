@@ -34,7 +34,7 @@
       </el-form>
       <div>
         <msg-box v-for="(item,index) in msgList" :key="index" :msgcontext="item.Desc"
-                 :username="item.NickName"></msg-box>
+                 :username="item.NickName" :createtime = "item.CreateTime"></msg-box>
       </div>
     </div>
   </div>
