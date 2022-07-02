@@ -35,19 +35,21 @@ func (c *FileController) UploadFiles() {
 	if err != nil {
 		panic("文件读取失败")
 	}
-	fileId := util.RandStringWithTime()
-	imgId := util.RandStringWithTime()
+	go func() {
+		fileId := util.RandStringWithTime()
+		imgId := util.RandStringWithTime()
 
-	video := &videoInfo.Video{}
-	video.Username = username
-	video.Type = typeName
-	video.Title = title
-	video.VideoId = fileId
-	video.ImageId = imgId
-	video.Description = des
-	bosService.BosUpload(fileBytes, username, fileId)
-	bosService.BosUpload(imgBytes, username, imgId)
-	videoDao.CreateVideo(video)
+		video := &videoInfo.Video{}
+		video.Username = username
+		video.Type = typeName
+		video.Title = title
+		video.VideoId = fileId
+		video.ImageId = imgId
+		video.Description = des
+		bosService.BosUpload(fileBytes, username, fileId)
+		bosService.BosUpload(imgBytes, username, imgId)
+		videoDao.CreateVideo(video)
+	}()
 
 	log.Println("上传成功！")
 	response := &ResponseData{}
