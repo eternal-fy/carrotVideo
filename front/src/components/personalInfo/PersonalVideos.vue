@@ -29,7 +29,7 @@
         {
           required: true,
           message: 'Please input  title',
-          trigger: 'blur',
+          trigger: 'unblur',
         }]">
             <el-input v-model="videoInfo.title"/>
           </el-form-item>
@@ -37,7 +37,6 @@
         {
           required: true,
           message: 'Please select',
-          trigger: 'blur',
         }]">
             <el-select v-model="videoInfo.type" placeholder="please select your type">
               <el-option v-for="(item,index) in types" :key="index" :label="item" :value="item"/>
